@@ -4,15 +4,18 @@ class Play extends Phaser.Scene {
     }
 
     preload() {
-        this.preload.image('joe', './assets/joe.png');
+        this.load.image('background1', './assets/sceneryTest.png');
+        this.load.image('player', './assets/playerTest.png')
     }
 
 
     create() {
-        this.back = this.add.tileSprite(0,0,500,500, 'joe').setOrigin(0,0);
+        this.back1 = this.add.tileSprite(0,0,1280,720, 'background1').setOrigin(0,0);
+        this.player = this.add.sprite(0, 360, 'player').setOrigin(0,0);
     }
 
     update() {
-        console.log("test");
+        
+        this.back1.tilePositionX += 4;
     }
 }
