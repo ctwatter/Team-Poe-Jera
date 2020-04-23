@@ -2,6 +2,7 @@ let config = {
     type: Phaser.CANVAS,
     width: 1280,
     height: 720,
+    resolution: window.devicePixelRatio,
     physics: {
         default: 'arcade',
         arcade: {
