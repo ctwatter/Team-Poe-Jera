@@ -4,7 +4,7 @@ class Play extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('background1', './assets/sceneryTest.png');
+        this.load.image('background1', './assets/bgTest.png');
         this.load.image('player', './assets/playerTest.png')
         this.load.image('obstacle', './assets/obstacleTest.png')
         this.load.image('enemy', './assets/enemyTest.png')
@@ -31,6 +31,6 @@ class Play extends Phaser.Scene {
             yoyo: false
             // do ease function based on distance?
         })
-        this.back1.tilePositionX += 4;
+        this.back1.tilePositionX += 1;
     }   
 }
