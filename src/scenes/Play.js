@@ -19,8 +19,18 @@ class Play extends Phaser.Scene {
 
     update() {
         
-        this.player.x = game.input.mousePointer.x;
-        this.player.y = game.input.mousePointer.y;
+        var vx = this.player.body.velocity.x;
+        //console.log(vx)
+        this.tweens.add({
+            targets: this.player,
+            x: game.input.mousePointer.x,
+            y: game.input.mousePointer.y,
+            duration : 200,
+            ease: 'Linear',
+            repeat: 0,
+            yoyo: false
+            // do ease function based on distance?
+        })
         this.back1.tilePositionX += 4;
-    }
+    }   
 }
