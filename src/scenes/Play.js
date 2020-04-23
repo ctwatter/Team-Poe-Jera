@@ -14,7 +14,7 @@ class Play extends Phaser.Scene {
     create() {
         keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.back1 = this.add.tileSprite(0,0,1280,720, 'background1').setOrigin(0,0);
-        this.player = this.physics.add.sprite(0, 355, 'player').setScale(0.4, 0.4).setOrigin(0.5);
+        this.player = this.physics.add.sprite(0, 355, 'player').setScale(0.4, 0.4).setOrigin(0.8,0.5);
     }
 
     update() {
@@ -26,7 +26,7 @@ class Play extends Phaser.Scene {
             x: game.input.mousePointer.x,
             y: game.input.mousePointer.y,
             duration : 200,
-            ease: 'Linear',
+            ease: 'Power',
             repeat: 0,
             yoyo: false
             // do ease function based on distance?
