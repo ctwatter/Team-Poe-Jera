@@ -26,7 +26,7 @@ class Play extends Phaser.Scene {
             x: game.input.mousePointer.x,
             y: game.input.mousePointer.y,
             duration : 200,
-            ease: 'Linear',
+            ease: 'Power',
             repeat: 0,
             yoyo: false
             // do ease function based on distance?
