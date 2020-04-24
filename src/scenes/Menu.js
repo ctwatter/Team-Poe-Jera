@@ -4,12 +4,12 @@ class Menu extends Phaser.Scene {
     }
 
     preload() {
-        //this.load.image('background1', './assets/sceneryTest.png');
+        this.load.image('logo', './assets/logo.png');
     }
 
 
     create() {
-        //this.back1 = this.add.tileSprite(0,0,1280,720, 'background1').setOrigin(0,0);
+        this.back1 = this.add.sprite(game.config.width/2,game.config.height/2, 'logo').setOrigin(0.5);
     }
 
     update() {

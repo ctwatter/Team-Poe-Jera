@@ -4,7 +4,7 @@ class Play extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('background1', './assets/bgTest.png');
+        this.load.image('background', './assets/bg.png');
         this.load.image('player', './assets/playerTest.png')
         this.load.image('obstacle', './assets/obstacleTest.png')
         this.load.image('enemy', './assets/enemyTest.png')
@@ -17,7 +17,7 @@ class Play extends Phaser.Scene {
 
     create() {
         keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-        this.back1 = this.add.tileSprite(0,0,1280,720, 'background1').setOrigin(0,0);
+        this.back1 = this.add.tileSprite(0,0,2560,720, 'background').setOrigin(0,0);
         this.player = this.physics.add.sprite(0, 355, 'player').setScale(0.4, 0.4).setOrigin(0.8,0.5);
 
         //testing word clouds
