@@ -10,6 +10,8 @@ class Play extends Phaser.Scene {
         this.load.image('enemy', './assets/enemyTest.png')
         this.load.image('gb1', './assets/gb1.png')
         this.load.image('gb2', './assets/gb2.png')
+
+        this.load.atlas('collectibles', './assets/collectibles.png','./assets/collectibles.json')
     }
 
 
@@ -20,7 +22,10 @@ class Play extends Phaser.Scene {
 
         //testing word clouds
         this.gb1 = this.add.sprite(200,200, 'gb1').setScale(0.5, 0.5);
-        this.gb2 = this.add.sprite(500,200, 'gb2').setScale(0.5, 0.5);;
+        this.gb2 = this.add.sprite(500,200, 'gb2').setScale(0.5, 0.5);
+
+
+        this.test = this.add.sprite(600, 600, 'collectibles', 'gb1');
     }
 
     update() {
