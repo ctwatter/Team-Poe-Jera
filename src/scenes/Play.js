@@ -8,6 +8,8 @@ class Play extends Phaser.Scene {
         this.load.image('player', './assets/playerTest.png')
         this.load.image('obstacle', './assets/obstacleTest.png')
         this.load.image('enemy', './assets/enemyTest.png')
+        this.load.image('gb1', './assets/gb1.png')
+        this.load.image('gb2', './assets/gb2.png')
     }
 
 
@@ -15,6 +17,10 @@ class Play extends Phaser.Scene {
         keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.back1 = this.add.tileSprite(0,0,1280,720, 'background1').setOrigin(0,0);
         this.player = this.physics.add.sprite(0, 355, 'player').setScale(0.4, 0.4).setOrigin(0.8,0.5);
+
+        //testing word clouds
+        this.gb1 = this.add.sprite(200,200, 'gb1').setScale(0.5, 0.5);
+        this.gb2 = this.add.sprite(500,200, 'gb2').setScale(0.5, 0.5);;
     }
 
     update() {
