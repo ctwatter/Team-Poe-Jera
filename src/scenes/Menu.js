@@ -18,14 +18,15 @@ class Menu extends Phaser.Scene {
         this.start = this.add.sprite(game.config.width/2 + 330,game.config.height/2 + 50, 
                 'start').setScale(0.5,0.5).setOrigin(0.5).setInteractive();
 
+        //Called when clicked on start        
         this.start.on('pointerdown', () => {
 
-            this.cameras.main.fade(2000, 0, 0, 0);
+            //this.cameras.main.fade(2000, 255, 255, 255);
             //this.scene.start("playScene");
             
         });
 
-    
+        //this is called after screen fades out completely
         this.cameras.main.on('camerafadeoutcomplete', () => {
     
             this.scene.start("playScene");
