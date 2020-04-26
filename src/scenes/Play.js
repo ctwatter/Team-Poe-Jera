@@ -13,6 +13,8 @@ class Play extends Phaser.Scene {
         this.load.image('trail', './assets/trailParticle.png')
 
         this.load.atlas('collectibles', './assets/collectibles.png','./assets/collectibles.json')
+
+        this.load.audio('bgm', './assets/yume.mp3')
     }
 
 
@@ -70,6 +72,10 @@ class Play extends Phaser.Scene {
         this.addBubble();
         
         this.physics.add.overlap(this.player, this.bubbleGroup, this.bubbleOverlap, null, this)
+
+        this.bgm = game.sound.add('bgm');
+        this.bgm.loop = true;
+        this.bgm.play();
     }
 
     addBubble() {
