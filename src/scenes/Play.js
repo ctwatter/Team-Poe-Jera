@@ -13,8 +13,10 @@ class Play extends Phaser.Scene {
         this.load.image('trail', './assets/trailParticle.png')
 
         this.load.atlas('collectibles', './assets/collectibles.png','./assets/collectibles.json')
+        this.load.atlas('uncollectibles', './assets/uncollectibes.png','./assets/uncollectibles.json')
 
         this.load.audio('bgm', './assets/yume.mp3')
+        //this.load.audio(BONK)
     }
 
 
@@ -35,7 +37,7 @@ class Play extends Phaser.Scene {
                 x: -25,
                 y: -43
             },
-            alpha: { start: 1, end: 0 },
+            alpha: { start: .1, end: 0 },
             scale: { start: 0.1, end: 0 },
             speedX: { min: -1000, max: -500 },
             speedY: { min: -5, max: 5},
@@ -50,7 +52,7 @@ class Play extends Phaser.Scene {
                 x: -5,
                 y: 40
             },
-            alpha: { start: 1, end: 0 },
+            alpha: { start: .1, end: 0 },
             scale: { start: 0.1, end: 0 },
             speedX: { min: -1000, max: -500 },
             speedY: { min: -5, max: 5},
@@ -59,6 +61,9 @@ class Play extends Phaser.Scene {
             //angle: { min : 0, max : 360},
             lifespan: 500
         });
+        //cloud explosion
+
+
         //airStreamEmitter.startFollow(this.player);
         
         airStreamEmitter1.start();
@@ -69,6 +74,7 @@ class Play extends Phaser.Scene {
             runChildUpdate: true
         })
 
+        this.addBubble();
         this.addBubble();
         
         this.physics.add.overlap(this.player, this.bubbleGroup, this.bubbleOverlap, null, this)
@@ -113,8 +119,29 @@ class Play extends Phaser.Scene {
     }
 
     bubbleOverlap(player, bubble) {
-        //update score
-        bubble.resetLoc();
-        console.log("test");
+        if(bubble.good == 0){
+            //play sound here
+            let cloudExParticles = this.add.particles('trail');
+            let cloudExEmitter1 = cloudExParticles.createEmitter({
+                alpha: { start: 1, end: 0 },
+                scale: { start: 0.1, end: 0 },
+                speedX: { min: -500, max: 500 },
+                speedY: { min: -500, max: 500 },
+                frequency: 5,
+                quantity: {min : 10, max: 10},
+                //angle: { min : 0, max : 360},
+                lifespan: 500
+            });
+    
+            cloudExEmitter1.explode(150, bubble.x, bubble.y);
+
+            //update score
+            bubble.resetLoc();
+            console.log("test");
+        } else {
+            //play sound here
+            //do scene change
+        }
+
     }
 }
