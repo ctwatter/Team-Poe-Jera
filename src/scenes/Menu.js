@@ -6,6 +6,8 @@ class Menu extends Phaser.Scene {
     preload() {
         this.load.image('logo', './assets/logo.png');
         this.load.image('start', './assets/start.png');
+
+        this.load.audio('starting', './assets/sfx_start.wav');
     }
 
 
@@ -21,6 +23,7 @@ class Menu extends Phaser.Scene {
 
         this.start.on('pointerdown', () => {
             this.starting = true;
+            this.sound.play('starting');
         });
     }
     
