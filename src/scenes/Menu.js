@@ -22,6 +22,22 @@ class Menu extends Phaser.Scene {
         this.start.on('pointerdown', () => {
             this.starting = true;
         });
+
+
+        let scoreConfig = {
+            fontFamily: 'Times New Roman Bold',
+            fontSize: '26px',
+            color: '#000000',
+            align: 'left',
+            padding: {
+                top: 15,
+                bottom: 15,
+                left: 15,
+                right: 15
+            },
+            
+        }
+        this.highscore = this.add.text(game.config.width - 20,game.config.height,"Highscore: " + HighScore, scoreConfig).setOrigin(1,1);
     }
     
 

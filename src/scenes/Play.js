@@ -82,6 +82,26 @@ class Play extends Phaser.Scene {
         this.bgm = game.sound.add('bgm');
         this.bgm.loop = true;
         this.bgm.play();
+
+
+
+        //adding score
+        //score display
+        let scoreConfig = {
+            fontFamily: 'Times New Roman',
+            fontSize: '26px',
+            color: '#000000',
+            align: 'left',
+            padding: {
+                top: 15,
+                bottom: 15,
+                left: 15,
+                right: 15
+            },
+            
+        }
+
+        this.score = this.add.text(10,0, 'Score: ' + Score, scoreConfig).setOrigin(0,0);
     }
 
     addBubble() {
@@ -110,6 +130,8 @@ class Play extends Phaser.Scene {
         //background movement
         this.back1.tilePositionX += 1;
 
+        this.score.setText("Score: " + Score);
+
 
 
 
@@ -132,7 +154,8 @@ class Play extends Phaser.Scene {
                 //angle: { min : 0, max : 360},
                 lifespan: 500
             });
-    
+            Score += 100;
+
             cloudExEmitter1.explode(150, bubble.x, bubble.y);
 
             //update score
