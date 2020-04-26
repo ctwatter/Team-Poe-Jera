@@ -27,5 +27,5 @@ let config = {
 let game = new Phaser.Game(config);
 
 let keySpace;
-let HighScore;
-let Score;
+let HighScore = 0;
+let Score = 0;
