@@ -1,7 +1,8 @@
-class bubble extends Phaser.GameObjects.Sprite {
-    constructor(scene, x, y, key, type) {
-        super(scene, x, y, key, type);
+class bubble extends Phaser.Physics.Arcade.Sprite {
+    constructor(scene, x, y, texture, frame) {
+        super(scene, x, y, texture, frame);
         //sound here
+        scene.physics.add.existing(this);
         scene.add.existing(this);
         this.side = 0; //0 -> front, 1 -> top, 2 -> bottom
         this.good = 0; //0 -> good (blue bubble), 1 -> bad (red bubble)
@@ -9,19 +10,18 @@ class bubble extends Phaser.GameObjects.Sprite {
         this.moveY = 0;
         this.buffer = 50; //size of sprite so that it isnt cut off of screen
         this.waiting = false;
+        this.speedX = 5;
     }
 
-
-    
-
     update() {
+        //console.log("bubble movin");
         //if hit boundaries or player, reset
         if(this.x < 0 - this.buffer) {
-            this.reset();
-        } else if (this.y < 0 - this.buffer && this.side != 2) {
-            this.reset();
-        } else if (this.y + this.buffer > game.config.height && this.side != 1) {
-            this.reset();
+            this.resetLoc();
+        } else if (this.y < 0 - this.buffer && this.side != 1) {
+            this.resetLoc();
+        } else if (this.y - this.buffer * 2 > game.config.height && this.side != 2) {
+            this.resetLoc();
         }
         if(!this.waiting){
             this.x += this.moveX;
@@ -29,7 +29,8 @@ class bubble extends Phaser.GameObjects.Sprite {
         }
     }
 
-    reset() {
+    resetLoc() {
+        this.waiting = true;
         this.good = Phaser.Math.Between(0,1);
         this.side = Phaser.Math.Between(0,2);
         if(this.good == 0){
@@ -38,21 +39,28 @@ class bubble extends Phaser.GameObjects.Sprite {
             //pick random sprite from bad pool
         }
 
-        if(this.side == 0){
+        if(this.side == 0){ //left
             this.x = game.config.width + this.buffer;
             this.y = Phaser.Math.Between(this.buffer, game.config.height - this.buffer);
-            this.moveX = -10;
+            this.moveX = -this.speedX;
             this.moveY = Phaser.Math.Between(-10,10);
-        } else if(this.side == 1) {
-            this.x = Phaser.Math.Between(game.config.width/2, game.config.width/2 - buffer)
-            this.y = game.config.height + this.buffer;
-            this.moveX = -10;
-            this.moveY = Phaser.Math.Between(0,10);
-        } else if(this.side == 2) {
-            this.x = Phaser.Math.Between(game.config.width/2, game.config.width/2 - buffer)
+        } else if(this.side == 1) { //top
+            this.x = Phaser.Math.Between(game.config.width/2, game.config.width/2 - this.buffer)
             this.y = 0 - this.buffer;
-            this.moveX = -10;
+            this.moveX = -this.speedX;
+            this.moveY = Phaser.Math.Between(0,10);
+        } else if(this.side == 2) { //bottom
+            this.x = Phaser.Math.Between(game.config.width/2, game.config.width/2 - this.buffer)
+            this.y = game.config.height + this.buffer;
+            this.moveX = -this.speedX;
             this.moveY = Phaser.Math.Between(-10,0);
         }
+
+        this.scene.time.addEvent({
+            delay: Phaser.Math.Between(500,2500),
+            callback: ()=>{
+                this.waiting = false;
+          }
+        });
     }
 }
