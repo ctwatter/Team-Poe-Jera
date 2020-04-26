@@ -10,6 +10,7 @@ class Play extends Phaser.Scene {
         this.load.image('enemy', './assets/enemyTest.png')
         this.load.image('gb1', './assets/gb1.png')
         this.load.image('gb2', './assets/gb2.png')
+        this.load.image('trail', './assets/trailParticle.png')
 
         this.load.atlas('collectibles', './assets/collectibles.png','./assets/collectibles.json')
     }
@@ -25,16 +26,40 @@ class Play extends Phaser.Scene {
 
 
 
-        let airStreamParticles = this.add.particles('gb1');
-        let airStreamEmitter = airStreamParticles.createEmitter({
-            alpha: { start: 1, end: 1 },
+        let airStreamParticles = this.add.particles('trail');
+        let airStreamEmitter1 = airStreamParticles.createEmitter({
+            follow: this.player,
+            followOffset: {
+                x: -25,
+                y: -43
+            },
+            alpha: { start: 1, end: 0 },
             scale: { start: 0.1, end: 0 },
             speedX: { min: -1000, max: -500 },
             speedY: { min: -5, max: 5},
-            lifespan: 1500
-        })
-        airStreamEmitter.startFollow(this.player);
-        airStreamEmitter.start();
+            frequency: 5,
+            quantity: {min : 10, max: 10},
+            //angle: { min : 0, max : 360},
+            lifespan: 500
+        });
+        let airStreamEmitter2 = airStreamParticles.createEmitter({
+            follow: this.player,
+            followOffset: {
+                x: -5,
+                y: 40
+            },
+            alpha: { start: 1, end: 0 },
+            scale: { start: 0.1, end: 0 },
+            speedX: { min: -1000, max: -500 },
+            speedY: { min: -5, max: 5},
+            frequency: 5,
+            quantity: {min : 10, max: 10},
+            //angle: { min : 0, max : 360},
+            lifespan: 500
+        });
+        //airStreamEmitter.startFollow(this.player);
+        
+        airStreamEmitter1.start();
         //this.gb1 = this.add.sprite(200,200, 'gb1').setScale(0.5, 0.5);
         //this.gb2 = this.add.sprite(500,200, 'gb2').setScale(0.5, 0.5);;
 
@@ -43,11 +68,12 @@ class Play extends Phaser.Scene {
         })
 
         this.addBubble();
-
+        
         this.physics.add.overlap(this.player, this.bubbleGroup, this.bubbleOverlap, null, this)
     }
 
     addBubble() {
+        
         let bubble1 = new bubble(this, 200, 200, 'gb1').setScale(0.5, 0.5);
         bubble1.resetLoc();
         this.bubbleGroup.add(bubble1);
