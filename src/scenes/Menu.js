@@ -21,8 +21,8 @@ class Menu extends Phaser.Scene {
         //Called when clicked on start        
         this.start.on('pointerdown', () => {
 
-            //this.cameras.main.fade(2000, 255, 255, 255);
-            //this.scene.start("playScene");
+            this.cameras.main.fade(2000, 255, 255, 255);
+            this.scene.start("playScene");
             
         });
 
