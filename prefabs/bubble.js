@@ -13,6 +13,10 @@ class bubble extends Phaser.Physics.Arcade.Sprite {
         this.speedX = 5;
     }
 
+    preload() {
+        this.load.atlas('collectibles', './assets/collectibles.png','./assets/collectibles.json')
+    }
+    
     update() {
         //console.log("bubble movin");
         //if hit boundaries or player, reset
@@ -31,9 +35,10 @@ class bubble extends Phaser.Physics.Arcade.Sprite {
 
     resetLoc() {
         this.waiting = true;
-        this.good = Phaser.Math.Between(0,1);
+        this.good = 0; //Phaser.Math.Between(0,1);
         this.side = Phaser.Math.Between(0,2);
         if(this.good == 0){
+            this.setTexture('collectibles', 'gb' + Phaser.Math.Between(1,6));
             //pick random sprite from good pool
         } else {
             //pick random sprite from bad pool
