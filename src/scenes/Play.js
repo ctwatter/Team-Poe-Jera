@@ -162,6 +162,10 @@ class Play extends Phaser.Scene {
             bubble.resetLoc();
             console.log("test");
         } else {
+            if(Score > HighScore)
+            {
+                HighScore = Score;
+            }
             //play sound here
             //do scene change
         }
