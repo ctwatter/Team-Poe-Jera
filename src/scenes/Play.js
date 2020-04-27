@@ -16,6 +16,8 @@ class Play extends Phaser.Scene {
         this.load.atlas('uncollectibles', './assets/uncollectibes.png','./assets/uncollectibles.json')
 
         this.load.audio('bgm', './assets/bgm.wav')
+        this.load.audio('bonk', './assets/sfx_bonk.wav')
+        this.load.audio('poof', './assets/sfx_good.wav')
         //this.load.audio(BONK)
     }
 
@@ -114,8 +116,7 @@ class Play extends Phaser.Scene {
 
     update() {
 
-
-        var vx = this.player.body.velocity.x;
+        //var vx = this.player.body.velocity.x;
         //player movement
         this.tweens.add({
             targets: this.player,
@@ -131,18 +132,12 @@ class Play extends Phaser.Scene {
         this.back1.tilePositionX += 1;
 
         this.score.setText("Score: " + Score);
-
-
-
-
-
-
-
     }
 
     bubbleOverlap(player, bubble) {
         if(bubble.good == 0){
             //play sound here
+            this.sound.play('poof');
             let cloudExParticles = this.add.particles('trail');
             let cloudExEmitter1 = cloudExParticles.createEmitter({
                 alpha: { start: 1, end: 0 },
@@ -162,9 +157,36 @@ class Play extends Phaser.Scene {
             bubble.resetLoc();
             console.log("test");
         } else {
-            //play sound here
-            //do scene change
+            this.sound.play('bonk');
+            let cloudExParticles = this.add.particles('trail');
+            let cloudExEmitter1 = cloudExParticles.createEmitter({
+                alpha: { start: 1, end: 0 },
+                scale: { start: 0.1, end: 0 },
+                speedX: { min: -500, max: 500 },
+                speedY: { min: -500, max: 500 },
+                frequency: 5,
+                quantity: {min : 10, max: 10},
+                //angle: { min : 0, max : 360},
+                lifespan: 500
+            });
+            cloudExEmitter1.explode(150, bubble.x, bubble.y);
+            bubble.resetLoc();
+            this.cameras.main.fadeOut(2000,255, 255, 255);
+            this.cameras.main.on('camerafadeoutcomplete', () => {
+                this.transitioning();
+            });
         }
+    }
 
+    transitioning() {
+        this.scene.transition({
+            target: 'menuScene',
+            duration: 1700,
+        });
+        this.tweens.add({
+            targets: this.bgm,
+            volume: 0,
+            duration: 1500,
+        });
     }
 }
