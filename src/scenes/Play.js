@@ -15,7 +15,7 @@ class Play extends Phaser.Scene {
         this.load.atlas('collectibles', './assets/collectibles.png','./assets/collectibles.json')
         this.load.atlas('uncollectibles', './assets/uncollectibes.png','./assets/uncollectibles.json')
 
-        this.load.audio('bgm', './assets/yume.mp3')
+        this.load.audio('bgm', './assets/bgm.wav')
         //this.load.audio(BONK)
     }
 
