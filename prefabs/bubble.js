@@ -68,7 +68,7 @@ class bubble extends Phaser.Physics.Arcade.Sprite {
         this.scene.time.addEvent({
             delay: Phaser.Math.Between(500,2500),
             callback: ()=>{
-                changeCloud();
+                this.changeCloud();
                 this.waiting = false;
           }
         });
