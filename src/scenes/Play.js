@@ -23,6 +23,7 @@ class Play extends Phaser.Scene {
 
 
     create() {
+        Score = 0;
         this.cameras.main.fadeIn(2000,255, 255, 255);
         keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.back1 = this.add.tileSprite(0,0,2560,720, 'background').setOrigin(0,0);
@@ -74,7 +75,7 @@ class Play extends Phaser.Scene {
 
         this.bubbleGroup = this.add.group({
             runChildUpdate: true
-        })
+        });
 
         this.addBubble();
         this.addBubble();
@@ -102,13 +103,15 @@ class Play extends Phaser.Scene {
             },
             
         }
-
+        this.scoreMilestone = [500, 1000, 2000, 3000, 4000, 5000];
+        this.currMilestone = 0;
+        this.lastMilestone = 10000;
         this.score = this.add.text(10,0, 'Score: ' + Score, scoreConfig).setOrigin(0,0);
     }
 
     addBubble() {
         
-        let bubble1 = new bubble(this, 200, 200, 'gb1').setScale(0.5, 0.5);
+        let bubble1 = new bubble(this, 1280, 1000, 'gb1').setScale(0.5, 0.5);
         bubble1.resetLoc();
         this.bubbleGroup.add(bubble1);
 
@@ -132,6 +135,23 @@ class Play extends Phaser.Scene {
         this.back1.tilePositionX += 1;
 
         this.score.setText("Score: " + Score);
+
+
+        if(this.currMilestone >= this.scoreMilestone.length){
+            if(Score > this.lastMilestone)
+            {
+                console.log("ADD CLOUD1");
+                this.lastMilestone += 5000;
+                this.addBubble();
+                //play chime?
+            }
+        } else if(Score >= this.scoreMilestone[this.currMilestone])
+        {
+            console.log("ADD CLOUD2");
+            this.currMilestone++;
+            this.addBubble();
+            //play chime?
+        }
     }
 
     bubbleOverlap(player, bubble) {
@@ -157,6 +177,7 @@ class Play extends Phaser.Scene {
             bubble.resetLoc();
             console.log("test");
         } else {
+            console.log("BONK");
             this.sound.play('bonk');
             let cloudExParticles = this.add.particles('trail');
             let cloudExEmitter1 = cloudExParticles.createEmitter({
@@ -176,6 +197,7 @@ class Play extends Phaser.Scene {
                 this.transitioning();
             });
         }
+
     }
 
     transitioning() {
