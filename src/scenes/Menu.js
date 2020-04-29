@@ -39,12 +39,19 @@ class Menu extends Phaser.Scene {
             },
             
         }
+
         this.highscore = this.add.text(game.config.width - 20,game.config.height,"Highscore: " + HighScore, scoreConfig).setOrigin(1,1);
+
+        this.clickStart = false;
     }
     
 
     update() {
         if (this.starting) {
+            if (!this.clickStart) {
+                this.sound.play('starting');
+                this.clickStart = true;
+            }
             this.cameras.main.scrollY -= 4;
             if (this.cameras.main.scrollY <= -1080) {
                 this.transitioning();
@@ -55,7 +62,6 @@ class Menu extends Phaser.Scene {
 
 
     transitioning() {
-        this.sound.play('starting');
         this.scene.transition({
             target: "playScene",
             duration: 1000,
