@@ -7,13 +7,14 @@ class Loading extends Phaser.Scene {
         this.cameras.main.setBackgroundColor('#FFFFFF');
         let loadConfig = {
             fontFamily: 'Times New Roman',
-            fontSize: '32px',
+            fontSize: '48px',
             color: '#000000',
             align: 'center',
         }
-        this.loadingText = this.add.text(game.config.width/2, game.config.height/2 - 32, "Loading", loadConfig).setOrigin(0.5);
+
+        this.loadingText = this.add.text(game.config.width/2, game.config.height/2 - 64, "Loading", loadConfig).setOrigin(0.5);
         
-        loadConfig.fontSize = '18px';
+        loadConfig.fontSize = '20px';
         this.rnd = Phaser.Math.RND;
         this.randomThings = ["見ぬが花\nReality can't compete with imagination",
                              "一刻千金\nEvery moment is precious",
@@ -23,7 +24,7 @@ class Loading extends Phaser.Scene {
                              "思う念力岩をも通す\nWhere there is a will there is a way",
                              "一寸先は闇\nNo one knows what lies ahead",];
         this.randomTing = this.rnd.pick(this.randomThings);
-        this.randomText = this.add.text(game.config.width/2, game.config.height/2 + 64, this.randomTing, loadConfig).setOrigin(0.5);
+        this.randomText = this.add.text(game.config.width/2, game.config.height/2 + 32, this.randomTing, loadConfig).setOrigin(0.5);
 
         //load images
         this.load.image('logo', './assets/logo.png')
