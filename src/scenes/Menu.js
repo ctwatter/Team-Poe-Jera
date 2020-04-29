@@ -3,16 +3,9 @@ class Menu extends Phaser.Scene {
         super("menuScene")
     }
 
-    preload() {
-        this.load.image('logo', './assets/logo.png');
-        this.load.image('start', './assets/start.png');
-
-        this.load.audio('starting', './assets/sfx_start.wav');
-    }
-
-
     create() {
         this.cameras.main.setBackgroundColor("#FFFFFF");
+        this.cameras.main.fadeIn(2010,255, 255, 255);
         this.logo = this.add.sprite(game.config.width/2 + 330,game.config.height/2 - 180, 
             'logo').setScale(0.5,0.5).setOrigin(0.5);
 

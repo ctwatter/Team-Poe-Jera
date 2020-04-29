@@ -12,15 +12,6 @@ class bubble extends Phaser.Physics.Arcade.Sprite {
         this.waiting = false;
         this.speedX = 5;
     }
-
-    create(){
-
-    }
-
-    preload() {
-        this.load.atlas('collectibles', './assets/collectibles.png','./assets/collectibles.json');
-        this.load.atlas('uncollectibles', './assets/uncollectibes.png','./assets/uncollectibles.json');
-    }
     
     update() {
         //console.log("bubble movin");

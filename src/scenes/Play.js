@@ -3,25 +3,6 @@ class Play extends Phaser.Scene {
         super("playScene")
     }
 
-    preload() {
-        this.load.image('background', './assets/bg.png');
-        this.load.image('player', './assets/playerTest.png')
-        this.load.image('obstacle', './assets/obstacleTest.png')
-        this.load.image('enemy', './assets/enemyTest.png')
-        this.load.image('gb1', './assets/gb1.png')
-        this.load.image('gb2', './assets/gb2.png')
-        this.load.image('trail', './assets/trailParticle.png')
-
-        this.load.atlas('collectibles', './assets/collectibles.png','./assets/collectibles.json')
-        this.load.atlas('uncollectibles', './assets/uncollectibes.png','./assets/uncollectibles.json')
-
-        this.load.audio('bgm', './assets/bgm.wav')
-        this.load.audio('bonk', './assets/sfx_bonk.wav')
-        this.load.audio('poof', './assets/sfx_good.wav')
-        //this.load.audio(BONK)
-    }
-
-
     create() {
         Score = 0;
         this.cameras.main.fadeIn(2000,255, 255, 255);
@@ -206,6 +187,11 @@ class Play extends Phaser.Scene {
                 bubble.resetLoc();
                 this.gameOver = true;
                 this.cameras.main.fadeOut(2000,255, 255, 255);
+                this.tweens.add({
+                    targets: this.bgm,
+                    volume: 0,
+                    duration: 1500,
+                });
                 this.cameras.main.on('camerafadeoutcomplete', () => {
                     this.transitioning();
                 });
@@ -215,14 +201,11 @@ class Play extends Phaser.Scene {
     }
 
     transitioning() {
-        this.scene.transition({
-            target: 'menuScene',
-            duration: 1700,
-        });
-        this.tweens.add({
-            targets: this.bgm,
-            volume: 0,
-            duration: 1500,
+        this.time.delayedCall(2000, () => {
+            this.scene.transition({
+                target: 'menuScene',
+                duration: 10,
+            });
         });
     }
 }
