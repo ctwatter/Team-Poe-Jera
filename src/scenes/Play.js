@@ -73,14 +73,10 @@ class Play extends Phaser.Scene {
         
 
         //airStreamEmitter.startFollow(this.player);
-<<<<<<< Updated upstream
-        
-        airStreamEmitter1.start();
-=======
 
         this.airStreamEmitter1.start();
         this.airStreamEmitter2.start();
->>>>>>> Stashed changes
+
         //this.gb1 = this.add.sprite(200,200, 'gb1').setScale(0.5, 0.5);
         //this.gb2 = this.add.sprite(500,200, 'gb2').setScale(0.5, 0.5);;
 
