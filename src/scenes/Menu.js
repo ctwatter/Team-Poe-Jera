@@ -23,7 +23,6 @@ class Menu extends Phaser.Scene {
 
         this.start.on('pointerdown', () => {
             this.starting = true;
-            this.sound.play('starting');
         });
 
 
@@ -56,6 +55,7 @@ class Menu extends Phaser.Scene {
 
 
     transitioning() {
+        this.sound.play('starting');
         this.scene.transition({
             target: "playScene",
             duration: 1000,
