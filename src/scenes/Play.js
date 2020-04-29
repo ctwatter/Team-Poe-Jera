@@ -14,8 +14,8 @@ class Play extends Phaser.Scene {
 
 
 
-        let airStreamParticles = this.add.particles('trail');
-        let airStreamEmitter1 = airStreamParticles.createEmitter({
+        this.airStreamParticles = this.add.particles('trail');
+        this.airStreamEmitter1 = this.airStreamParticles.createEmitter({
             follow: this.player,
             followOffset: {
                 x: -25,
@@ -30,11 +30,16 @@ class Play extends Phaser.Scene {
             //angle: { min : 0, max : 360},
             lifespan: 500
         });
-        let airStreamEmitter2 = airStreamParticles.createEmitter({
+        this.airStreamEmitter2 = this.airStreamParticles.createEmitter({
             follow: this.player,
             followOffset: {
                 x: -5,
                 y: 40
+            },
+            frame : {
+                frames: 'trail',
+                cycle: false,
+                quantity: 1,
             },
             alpha: { start: .1, end: 0 },
             scale: { start: 0.1, end: 0 },
@@ -50,7 +55,9 @@ class Play extends Phaser.Scene {
 
         //airStreamEmitter.startFollow(this.player);
 
-        airStreamEmitter1.start();
+        this.airStreamEmitter1.start();
+        this.airStreamEmitter2.start();
+
         //this.gb1 = this.add.sprite(200,200, 'gb1').setScale(0.5, 0.5);
         //this.gb2 = this.add.sprite(500,200, 'gb2').setScale(0.5, 0.5);;
 
@@ -88,6 +95,7 @@ class Play extends Phaser.Scene {
         this.scoreMilestone = [500, 1000, 2000, 3000, 4000, 5000];
         this.currMilestone = 0;
         this.lastMilestone = 10000;
+        this.backgroundSpeed = 1;
         this.score = this.add.text(10,0, 'Score: ' + Score, scoreConfig).setOrigin(0,0);
 
         //game over flag
@@ -103,7 +111,9 @@ class Play extends Phaser.Scene {
     }
 
     update() {
-
+        if(this.input.keyboard.checkDown(keySpace, 0.01)){
+            Score += 100;
+        }
         //var vx = this.player.body.velocity.x;
         //player movement
         this.tweens.add({
@@ -117,7 +127,7 @@ class Play extends Phaser.Scene {
             // do ease function based on distance?
         })
         //background movement
-        this.back1.tilePositionX += 1;
+        this.back1.tilePositionX += this.backgroundSpeed ;
 
         this.score.setText("Score: " + Score);
 
@@ -128,13 +138,19 @@ class Play extends Phaser.Scene {
                 console.log("ADD CLOUD1");
                 this.lastMilestone += 5000;
                 this.addBubble();
+                this.backgroundSpeed += 0.5;
+                this.airStreamEmitter1.alpha.start += 0.1;
+                this.airStreamEmitter2.alpha.start += 0.1;
                 //play chime?
             }
         } else if(Score >= this.scoreMilestone[this.currMilestone])
         {
+            this.backgroundSpeed += 0.5;
             console.log("ADD CLOUD2");
             this.currMilestone++;
             this.addBubble();
+            this.airStreamEmitter1.alpha.start += 0.1;
+            this.airStreamEmitter2.alpha.start += 0.1;
             //play chime?
         }
     }
