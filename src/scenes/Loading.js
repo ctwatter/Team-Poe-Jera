@@ -7,57 +7,56 @@ class Loading extends Phaser.Scene {
         this.cameras.main.setBackgroundColor('#FFFFFF');
         let loadConfig = {
             fontFamily: 'Times New Roman',
-            fontSize: '26px',
+            fontSize: '32px',
             color: '#000000',
+            align: 'center',
         }
-        this.loadingText = this.add.text(game.config.width/2, game.config.height/2, "Loading...", loadConfig).setOrigin(0.5);
-        loadConfig.fontSize = '16px';
-        this.progressText = this.add.text(game.config.width/2, game.config.height/2 + 40, "", loadConfig).setOrigin(0.5);
-        this.progressUpdate("0%");
+        this.loadingText = this.add.text(game.config.width/2, game.config.height/2 - 32, "Loading", loadConfig).setOrigin(0.5);
+        
+        loadConfig.fontSize = '18px';
+        this.rnd = Phaser.Math.RND;
+        this.randomThings = ["見ぬが花\nReality can't compete with imagination",
+                             "一刻千金\nEvery moment is precious",
+                             "時は金なり\nTime is precious",
+                             "おのれに忠実であれ\nBe true to yourself",
+                             "待てば海路の日和あり\nGood things come to those who wait",
+                             "思う念力岩をも通す\nWhere there is a will there is a way",
+                             "一寸先は闇\nNo one knows what lies ahead",];
+        this.randomTing = this.rnd.pick(this.randomThings);
+        this.randomText = this.add.text(game.config.width/2, game.config.height/2 + 64, this.randomTing, loadConfig).setOrigin(0.5);
+
+        //load images
         this.load.image('logo', './assets/logo.png')
-        this.progressUpdate("6%");
         this.load.image('start', './assets/start.png')
-        this.progressUpdate("12%");
         this.load.image('background', './assets/bg.png')
-        this.progressUpdate("18%");
         this.load.image('player', './assets/playerTest.png')
-        this.progressUpdate("24%");
         this.load.image('obstacle', './assets/obstacleTest.png')
-        this.progressUpdate("30%");
         this.load.image('enemy', './assets/enemyTest.png')
-        this.progressUpdate("36%");
         this.load.image('gb1', './assets/gb1.png')
-        this.progressUpdate("42%");
         this.load.image('gb2', './assets/gb2.png')
-        this.progressUpdate("48%");
         this.load.image('trail', './assets/trailParticle.png')
-        this.progressUpdate("54%");
 
+        //load atlases
         this.load.atlas('collectibles', './assets/collectibles.png','./assets/collectibles.json')
-        this.progressUpdate("60%");
         this.load.atlas('uncollectibles', './assets/uncollectibes.png','./assets/uncollectibles.json')
-        this.progressUpdate("72%");
 
+        //load audios
         this.load.audio('bgm', './assets/bgm.wav')
-        this.progressUpdate("79%");
         this.load.audio('bonk', './assets/sfx_bonk.wav')
-        this.progressUpdate("86%");
         this.load.audio('poof', './assets/sfx_good.wav')
-        this.progressUpdate("93%");
         this.load.audio('starting', './assets/sfx_start.wav')
-        this.progressUpdate("100%");
-        this.cameras.main.fadeOut(2000,255, 255, 255);
-        this.cameras.main.on('camerafadeoutcomplete', () => {
-            this.time.delayedCall(500, ()=> {
-                this.scene.transition({
-                    target: 'menuScene',
-                    duration: 10,
+
+        //done loading, move to menu
+        this.time.delayedCall(2000, () => {
+            this.cameras.main.fadeOut(2000,255, 255, 255);
+            this.cameras.main.on('camerafadeoutcomplete', () => {
+                this.time.delayedCall(500, () => {
+                    this.scene.transition({
+                        target: 'menuScene',
+                        duration: 10,
+                    });
                 });
             });
         });
-    }
-
-    progressUpdate(text) {
-        this.progressText.setText(text);
     }
 }
