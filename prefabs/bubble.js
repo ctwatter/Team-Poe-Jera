@@ -44,7 +44,7 @@ class bubble extends Phaser.Physics.Arcade.Sprite {
         this.waiting = true;
         
         this.side = Phaser.Math.Between(0,2);
-        console.log("MOVING");
+        //console.log("MOVING");
         if(this.side == 0){ //left
             this.x = game.config.width + this.buffer;
             this.y = Phaser.Math.Between(this.buffer, game.config.height - this.buffer);
@@ -68,14 +68,14 @@ class bubble extends Phaser.Physics.Arcade.Sprite {
         this.scene.time.addEvent({
             delay: Phaser.Math.Between(500,2500),
             callback: ()=>{
-                changeCloud();
+                this.changeCloud();
                 this.waiting = false;
           }
         });
     }
 
     changeCloud() {
-        console.log("CHANGING GOOD/BAD");
+        //console.log("CHANGING GOOD/BAD");
         this.good = Phaser.Math.Between(0,1);
         if(this.good == 0){
             this.setTexture('collectibles', 'gb' + Phaser.Math.Between(1,6));
