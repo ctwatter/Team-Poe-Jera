@@ -11,19 +11,15 @@ class Play extends Phaser.Scene {
         //this.player = this.physics.add.sprite(0, 355, 'player').setScale(0.4, 0.4).setOrigin(0.8,0.5);
         //this.player.setCollideWorldBounds(true);
 
-        this.anims.create({ key: 'idle', frames: this.anims.generateFrameNames('player'), framerate: 8, repeat: -1 });
+        this.anims.create({ key: 'idle', frames: this.anims.generateFrameNames('player'), frameRate: 8, repeat: -1 });
 
         this.player = this.physics.add.sprite(0, 355, 'player').setScale(0.3).play('idle');
-
-
-        
-
 
         this.airStreamParticles = this.add.particles('trail');
         this.airStreamEmitter1 = this.airStreamParticles.createEmitter({
             follow: this.player,
             followOffset: {
-                x: -25,
+                x: 47,
                 y: -43
             },
             alpha: { start: 0, end: 0 },
@@ -38,7 +34,7 @@ class Play extends Phaser.Scene {
         this.airStreamEmitter2 = this.airStreamParticles.createEmitter({
             follow: this.player,
             followOffset: {
-                x: -5,
+                x: 75,
                 y: 40
             },
             alpha: { start: 0, end: 0 },
@@ -94,6 +90,7 @@ class Play extends Phaser.Scene {
         this.currMilestone = 0;
         this.lastMilestone = 10000;
         this.backgroundSpeed = 1;
+        this.framerate = 8;
         this.score = this.add.text(10,0, 'Score: ' + Score, scoreConfig).setOrigin(0,0);
 
         //game over flag
@@ -150,6 +147,8 @@ class Play extends Phaser.Scene {
             this.addBubble();
             this.airStreamEmitter1.alpha.start += 0.05;
             this.airStreamEmitter2.alpha.start += 0.05;
+            this.framerate += 2;
+            this.player.anims.msPerFrame = 1000/this.framerate;
             //play chime?
         }
     }
