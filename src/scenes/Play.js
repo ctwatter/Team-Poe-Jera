@@ -8,10 +8,15 @@ class Play extends Phaser.Scene {
         this.cameras.main.fadeIn(2000,255, 255, 255);
         keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.back1 = this.add.tileSprite(0,0,2560,720, 'background').setOrigin(0,0);
-        this.player = this.physics.add.sprite(0, 355, 'player').setScale(0.4, 0.4).setOrigin(0.8,0.5);
+        //this.player = this.physics.add.sprite(0, 355, 'player').setScale(0.4, 0.4).setOrigin(0.8,0.5);
         //this.player.setCollideWorldBounds(true);
 
-       
+        this.anims.create({ key: 'idle', frames: this.anims.generateFrameNames('player'), framerate: 8, repeat: -1 });
+
+        this.player = this.physics.add.sprite(0, 355, 'player').setScale(0.3).play('idle');
+
+
+        
 
 
         this.airStreamParticles = this.add.particles('trail');

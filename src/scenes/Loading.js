@@ -30,7 +30,7 @@ class Loading extends Phaser.Scene {
         this.load.image('logo', './assets/logo.png')
         this.load.image('start', './assets/start.png')
         this.load.image('background', './assets/bg.png')
-        this.load.image('player', './assets/playerTest.png')
+        //this.load.image('player', './assets/playerTest.png')
 
         this.load.image('gb1', './assets/gb1.png')
         this.load.image('gb2', './assets/gb2.png')
@@ -39,7 +39,7 @@ class Loading extends Phaser.Scene {
         //load atlases
         this.load.atlas('collectibles', './assets/collectibles.png','./assets/collectibles.json')
         this.load.atlas('uncollectibles', './assets/uncollectibes.png','./assets/uncollectibles.json')
-
+        this.load.atlas('player', './assets/playerSprites.png', './assets/playerSprites.json');
         //load audios
         this.load.audio('bgm', './assets/bgm.wav')
         this.load.audio('bonk', './assets/sfx_bonk.wav')
