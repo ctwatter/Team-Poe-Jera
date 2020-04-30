@@ -6,6 +6,10 @@ class Menu extends Phaser.Scene {
     create() {
         this.cameras.main.setBackgroundColor("#FFFFFF");
         this.cameras.main.fadeIn(2010,255, 255, 255);
+        //create title guy
+        this.anims.create({ key: 'sleep', frames: this.anims.generateFrameNames('titleGuy'), frameRate: 12, repeat: -1 });
+        this.titleGuy = this.add.sprite(0, 0, 'titleGuy').setScale(0.5).setOrigin(0,0).play('sleep');
+
         this.logo = this.add.sprite(game.config.width/2 + 330,game.config.height/2 - 180, 
             'logo').setScale(0.5,0.5).setOrigin(0.5);
 

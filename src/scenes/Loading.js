@@ -40,6 +40,8 @@ class Loading extends Phaser.Scene {
         this.load.atlas('collectibles', './assets/collectibles.png','./assets/collectibles.json')
         this.load.atlas('uncollectibles', './assets/uncollectibes.png','./assets/uncollectibles.json')
         this.load.atlas('player', './assets/playerSprites.png', './assets/playerSprites.json');
+        this.load.atlas('titleGuy', './assets/titleSprites.png', './assets/titleSprites.json');
+
         //load audios
         this.load.audio('bgm', './assets/bgm.wav')
         this.load.audio('bonk', './assets/sfx_bonk.wav')
