@@ -10,6 +10,7 @@ class bubble extends Phaser.Physics.Arcade.Sprite {
         this.moveY = 0;
         this.buffer = 50; //size of sprite so that it isnt cut off of screen
         this.waiting = false;
+        this.isActive = true;
         this.speedX = 5;
     }
     
@@ -75,5 +76,6 @@ class bubble extends Phaser.Physics.Arcade.Sprite {
         }
 
         this.waiting = false;
+        this.isActive = true;
     }
 }

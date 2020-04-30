@@ -124,9 +124,6 @@ class Play extends Phaser.Scene {
         //background movement
         this.back1.tilePositionX += this.backgroundSpeed;
 
-        this.score.setText("Score: " + Score);
-
-
         if(this.currMilestone >= this.scoreMilestone.length){
             if(Score > this.lastMilestone)
             {
@@ -155,60 +152,63 @@ class Play extends Phaser.Scene {
 
     bubbleOverlap(player, bubble) {
         if (!this.gameOver) {
-            if(bubble.good == 0){
-                //play sound here
-                this.sound.play('poof');
-                let cloudExParticles = this.add.particles('trail');
-                let cloudExEmitter1 = cloudExParticles.createEmitter({
-                    alpha: { start: 1, end: 0 },
-                    scale: { start: 0.1, end: 0 },
-                    speedX: { min: -500, max: 500 },
-                    speedY: { min: -500, max: 500 },
-                    frequency: 5,
-                    quantity: {min : 10, max: 10},
-                    //angle: { min : 0, max : 360},
-                    lifespan: 500
-                });
-                Score += 100;
+            if(bubble.isActive) {
+                bubble.isActive = false;
+                if(bubble.good == 0){
+                    //play sound here
+                    this.sound.play('poof');
+                    let cloudExParticles = this.add.particles('trail');
+                    let cloudExEmitter1 = cloudExParticles.createEmitter({
+                        alpha: { start: 1, end: 0 },
+                        scale: { start: 0.1, end: 0 },
+                        speedX: { min: -500, max: 500 },
+                        speedY: { min: -500, max: 500 },
+                        frequency: 5,
+                        quantity: {min : 10, max: 10},
+                        //angle: { min : 0, max : 360},
+                        lifespan: 500
+                    });
+                    
+                    cloudExEmitter1.explode(150, bubble.x, bubble.y);
 
-                cloudExEmitter1.explode(150, bubble.x, bubble.y);
+                    bubble.resetLoc();
+                    Score += 100;
+                    this.score.setText("Score: " + Score);
 
-                //update score
-                bubble.resetLoc();
-                console.log("test");
-            } else {
-                //game over you made a booboo
+                } else {
+                    //game over you made a booboo
 
-                if(Score > HighScore)
-                {
-                    HighScore = Score;
+                    if(Score > HighScore)
+                    {
+                        HighScore = Score;
+                    }
+
+                    //do scene change
+                    this.sound.play('bonk');
+                    let cloudExParticles = this.add.particles('trail');
+                    let cloudExEmitter1 = cloudExParticles.createEmitter({
+                        alpha: { start: 1, end: 0 },
+                        scale: { start: 0.1, end: 0 },
+                        speedX: { min: -500, max: 500 },
+                        speedY: { min: -500, max: 500 },
+                        frequency: 5,
+                        quantity: {min : 10, max: 10},
+                        //angle: { min : 0, max : 360},
+                        lifespan: 500
+                    });
+                    cloudExEmitter1.explode(150, bubble.x, bubble.y);
+                    bubble.resetLoc();
+                    this.gameOver = true;
+                    this.cameras.main.fadeOut(2000,255, 255, 255);
+                    this.tweens.add({
+                        targets: this.bgm,
+                        volume: 0,
+                        duration: 1500,
+                    });
+                    this.cameras.main.on('camerafadeoutcomplete', () => {
+                        this.transitioning();
+                    });
                 }
-
-                //do scene change
-                this.sound.play('bonk');
-                let cloudExParticles = this.add.particles('trail');
-                let cloudExEmitter1 = cloudExParticles.createEmitter({
-                    alpha: { start: 1, end: 0 },
-                    scale: { start: 0.1, end: 0 },
-                    speedX: { min: -500, max: 500 },
-                    speedY: { min: -500, max: 500 },
-                    frequency: 5,
-                    quantity: {min : 10, max: 10},
-                    //angle: { min : 0, max : 360},
-                    lifespan: 500
-                });
-                cloudExEmitter1.explode(150, bubble.x, bubble.y);
-                bubble.resetLoc();
-                this.gameOver = true;
-                this.cameras.main.fadeOut(2000,255, 255, 255);
-                this.tweens.add({
-                    targets: this.bgm,
-                    volume: 0,
-                    duration: 1500,
-                });
-                this.cameras.main.on('camerafadeoutcomplete', () => {
-                    this.transitioning();
-                });
             }
         }
 
