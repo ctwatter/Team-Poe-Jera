@@ -12,15 +12,6 @@ class bubble extends Phaser.Physics.Arcade.Sprite {
         this.waiting = false;
         this.speedX = 5;
     }
-
-    create(){
-
-    }
-
-    preload() {
-        this.load.atlas('collectibles', './assets/collectibles.png','./assets/collectibles.json');
-        this.load.atlas('uncollectibles', './assets/uncollectibes.png','./assets/uncollectibles.json');
-    }
     
     update() {
         //console.log("bubble movin");
@@ -42,8 +33,40 @@ class bubble extends Phaser.Physics.Arcade.Sprite {
                 
  
         this.waiting = true;
-        this.good = Phaser.Math.Between(0,1);
+        
         this.side = Phaser.Math.Between(0,2);
+        //console.log("MOVING");
+        if(this.side == 0){ //left
+            this.x = game.config.width + this.buffer * 2;
+            this.y = Phaser.Math.Between(this.buffer, game.config.height - this.buffer);
+            this.moveX = -this.speedX;
+            this.moveY = Phaser.Math.Between(-10,10);
+        } else if(this.side == 1) { //top
+            this.x = Phaser.Math.Between(game.config.width/2, game.config.width/2 - this.buffer)
+            this.y = 0 - this.buffer * 2;
+            this.moveX = -this.speedX;
+            this.moveY = Phaser.Math.Between(0,10);
+        } else if(this.side == 2) { //bottom
+            this.x = Phaser.Math.Between(game.config.width/2, game.config.width/2 - this.buffer)
+            this.y = game.config.height + this.buffer * 2;
+            this.moveX = -this.speedX;
+            this.moveY = Phaser.Math.Between(-10,0);
+        }
+
+
+
+
+        this.scene.time.addEvent({
+            delay: Phaser.Math.Between(500,2500),
+            callback: ()=>{
+                this.changeCloud();    
+          }
+        });
+    }
+
+    changeCloud() {
+        //console.log("CHANGING GOOD/BAD");
+        this.good = Phaser.Math.Between(0,1);
         if(this.good == 0){
             this.setTexture('collectibles', 'gb' + Phaser.Math.Between(1,6));
             //pick random sprite from good pool
@@ -51,28 +74,6 @@ class bubble extends Phaser.Physics.Arcade.Sprite {
             this.setTexture('uncollectibles', 'bb' + Phaser.Math.Between(1,5));
         }
 
-        if(this.side == 0){ //left
-            this.x = game.config.width + this.buffer;
-            this.y = Phaser.Math.Between(this.buffer, game.config.height - this.buffer);
-            this.moveX = -this.speedX;
-            this.moveY = Phaser.Math.Between(-10,10);
-        } else if(this.side == 1) { //top
-            this.x = Phaser.Math.Between(game.config.width/2, game.config.width/2 - this.buffer)
-            this.y = 0 - this.buffer;
-            this.moveX = -this.speedX;
-            this.moveY = Phaser.Math.Between(0,10);
-        } else if(this.side == 2) { //bottom
-            this.x = Phaser.Math.Between(game.config.width/2, game.config.width/2 - this.buffer)
-            this.y = game.config.height + this.buffer;
-            this.moveX = -this.speedX;
-            this.moveY = Phaser.Math.Between(-10,0);
-        }
-
-        this.scene.time.addEvent({
-            delay: Phaser.Math.Between(500,2500),
-            callback: ()=>{
-                this.waiting = false;
-          }
-        });
+        this.waiting = false;
     }
 }

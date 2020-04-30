@@ -3,16 +3,9 @@ class Menu extends Phaser.Scene {
         super("menuScene")
     }
 
-    preload() {
-        this.load.image('logo', './assets/logo.png');
-        this.load.image('start', './assets/start.png');
-
-        this.load.audio('starting', './assets/sfx_start.wav');
-    }
-
-
     create() {
         this.cameras.main.setBackgroundColor("#FFFFFF");
+        this.cameras.main.fadeIn(2010,255, 255, 255);
         this.logo = this.add.sprite(game.config.width/2 + 330,game.config.height/2 - 180, 
             'logo').setScale(0.5,0.5).setOrigin(0.5);
 
@@ -23,7 +16,6 @@ class Menu extends Phaser.Scene {
 
         this.start.on('pointerdown', () => {
             this.starting = true;
-            this.sound.play('starting');
         });
 
 
@@ -40,12 +32,19 @@ class Menu extends Phaser.Scene {
             },
             
         }
+
         this.highscore = this.add.text(game.config.width - 20,game.config.height,"Highscore: " + HighScore, scoreConfig).setOrigin(1,1);
+
+        this.clickStart = false;
     }
     
 
     update() {
         if (this.starting) {
+            if (!this.clickStart) {
+                this.sound.play('starting');
+                this.clickStart = true;
+            }
             this.cameras.main.scrollY -= 4;
             if (this.cameras.main.scrollY <= -1080) {
                 this.transitioning();
