@@ -31,8 +31,7 @@ class Loading extends Phaser.Scene {
         this.load.image('start', './assets/start.png')
         this.load.image('background', './assets/bg.png')
         this.load.image('player', './assets/playerTest.png')
-        this.load.image('obstacle', './assets/obstacleTest.png')
-        this.load.image('enemy', './assets/enemyTest.png')
+
         this.load.image('gb1', './assets/gb1.png')
         this.load.image('gb2', './assets/gb2.png')
         this.load.image('trail', './assets/trailParticle.png')

@@ -21,9 +21,9 @@ class Play extends Phaser.Scene {
                 x: -25,
                 y: -43
             },
-            alpha: { start: .1, end: 0 },
+            alpha: { start: 0, end: 0 },
             scale: { start: 0.1, end: 0 },
-            speedX: { min: -1000, max: -500 },
+            speedX: { min: -500, max: -250 },
             speedY: { min: -5, max: 5},
             frequency: 5,
             quantity: {min : 10, max: 10},
@@ -36,30 +36,23 @@ class Play extends Phaser.Scene {
                 x: -5,
                 y: 40
             },
-            frame : {
-                frames: 'trail',
-                cycle: false,
-                quantity: 1,
-            },
-            alpha: { start: .1, end: 0 },
+            alpha: { start: 0, end: 0 },
             scale: { start: 0.1, end: 0 },
-            speedX: { min: -1000, max: -500 },
+            speedX: { min: -500, max: -250 },
             speedY: { min: -5, max: 5},
             frequency: 5,
             quantity: {min : 10, max: 10},
             //angle: { min : 0, max : 360},
             lifespan: 500
         });
-        //cloud explosion
+        
 
 
-        //airStreamEmitter.startFollow(this.player);
+        // //airStreamEmitter.startFollow(this.player);
 
         this.airStreamEmitter1.start();
         this.airStreamEmitter2.start();
 
-        //this.gb1 = this.add.sprite(200,200, 'gb1').setScale(0.5, 0.5);
-        //this.gb2 = this.add.sprite(500,200, 'gb2').setScale(0.5, 0.5);;
 
         this.bubbleGroup = this.add.group({
             runChildUpdate: true
@@ -139,8 +132,9 @@ class Play extends Phaser.Scene {
                 this.lastMilestone += 5000;
                 this.addBubble();
                 this.backgroundSpeed += 0.5;
-                this.airStreamEmitter1.alpha.start += 0.1;
-                this.airStreamEmitter2.alpha.start += 0.1;
+                this.airStreamEmitter1.alpha.start += 0.05;
+                this.airStreamEmitter2.alpha.start += 0.05;
+
                 //play chime?
             }
         } else if(Score >= this.scoreMilestone[this.currMilestone])
@@ -149,8 +143,8 @@ class Play extends Phaser.Scene {
             console.log("ADD CLOUD2");
             this.currMilestone++;
             this.addBubble();
-            this.airStreamEmitter1.alpha.start += 0.1;
-            this.airStreamEmitter2.alpha.start += 0.1;
+            this.airStreamEmitter1.alpha.start += 0.05;
+            this.airStreamEmitter2.alpha.start += 0.05;
             //play chime?
         }
     }

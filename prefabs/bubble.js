@@ -37,18 +37,18 @@ class bubble extends Phaser.Physics.Arcade.Sprite {
         this.side = Phaser.Math.Between(0,2);
         //console.log("MOVING");
         if(this.side == 0){ //left
-            this.x = game.config.width + this.buffer;
+            this.x = game.config.width + this.buffer * 2;
             this.y = Phaser.Math.Between(this.buffer, game.config.height - this.buffer);
             this.moveX = -this.speedX;
             this.moveY = Phaser.Math.Between(-10,10);
         } else if(this.side == 1) { //top
             this.x = Phaser.Math.Between(game.config.width/2, game.config.width/2 - this.buffer)
-            this.y = 0 - this.buffer;
+            this.y = 0 - this.buffer * 2;
             this.moveX = -this.speedX;
             this.moveY = Phaser.Math.Between(0,10);
         } else if(this.side == 2) { //bottom
             this.x = Phaser.Math.Between(game.config.width/2, game.config.width/2 - this.buffer)
-            this.y = game.config.height + this.buffer;
+            this.y = game.config.height + this.buffer * 2;
             this.moveX = -this.speedX;
             this.moveY = Phaser.Math.Between(-10,0);
         }
@@ -59,8 +59,7 @@ class bubble extends Phaser.Physics.Arcade.Sprite {
         this.scene.time.addEvent({
             delay: Phaser.Math.Between(500,2500),
             callback: ()=>{
-                this.changeCloud();
-                this.waiting = false;
+                this.changeCloud();    
           }
         });
     }
@@ -74,5 +73,7 @@ class bubble extends Phaser.Physics.Arcade.Sprite {
         } else {
             this.setTexture('uncollectibles', 'bb' + Phaser.Math.Between(1,5));
         }
+
+        this.waiting = false;
     }
 }
