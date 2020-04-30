@@ -2,7 +2,9 @@ class Play extends Phaser.Scene {
     constructor(){
         super("playScene")
     }
-
+    preload() {
+        this.load.atlas('rainbowTrail', './assets/trailParticle-SheetRainbowPastel.png', './assets/trailParticle.json');
+    }
     create() {
         Score = 0;
         this.cameras.main.fadeIn(2000,255, 255, 255);
@@ -14,16 +16,17 @@ class Play extends Phaser.Scene {
 
 
 
-        this.airStreamParticles = this.add.particles('trail');
+        this.airStreamParticles = this.add.particles('rainbowTrail');
         this.airStreamEmitter1 = this.airStreamParticles.createEmitter({
             follow: this.player,
+            frame: ['trailParticle 0.png'],
             followOffset: {
                 x: -25,
                 y: -43
             },
             alpha: { start: 0, end: 0 },
             scale: { start: 0.1, end: 0 },
-            speedX: { min: -500, max: -250 },
+            speedX: { min: -1500, max: -250 },
             speedY: { min: -5, max: 5},
             frequency: 5,
             quantity: {min : 10, max: 10},
@@ -32,13 +35,14 @@ class Play extends Phaser.Scene {
         });
         this.airStreamEmitter2 = this.airStreamParticles.createEmitter({
             follow: this.player,
+            frame: ['trailParticle 0.png'],
             followOffset: {
                 x: -5,
                 y: 40
             },
             alpha: { start: 0, end: 0 },
             scale: { start: 0.1, end: 0 },
-            speedX: { min: -500, max: -250 },
+            speedX: { min: -1500, max: -250 },
             speedY: { min: -5, max: 5},
             frequency: 5,
             quantity: {min : 10, max: 10},
@@ -52,7 +56,7 @@ class Play extends Phaser.Scene {
 
         this.airStreamEmitter1.start();
         this.airStreamEmitter2.start();
-
+        this.airStreamAlpha = 0;
 
         this.bubbleGroup = this.add.group({
             runChildUpdate: true
@@ -93,6 +97,7 @@ class Play extends Phaser.Scene {
 
         //game over flag
         this.gameOver = false;
+        this.doRainbow(1);
     }
 
     addBubble() {
@@ -106,6 +111,7 @@ class Play extends Phaser.Scene {
     update() {
         if(this.input.keyboard.checkDown(keySpace, 0.01)){
             Score += 100;
+            
         }
         //var vx = this.player.body.velocity.x;
         //player movement
@@ -132,8 +138,7 @@ class Play extends Phaser.Scene {
                 this.lastMilestone += 5000;
                 this.addBubble();
                 this.backgroundSpeed += 0.5;
-                this.airStreamEmitter1.alpha.start += 0.05;
-                this.airStreamEmitter2.alpha.start += 0.05;
+                this.airStreamAlpha += 0.05;
 
                 //play chime?
             }
@@ -143,8 +148,7 @@ class Play extends Phaser.Scene {
             console.log("ADD CLOUD2");
             this.currMilestone++;
             this.addBubble();
-            this.airStreamEmitter1.alpha.start += 0.05;
-            this.airStreamEmitter2.alpha.start += 0.05;
+            this.airStreamAlpha += 0.05;
             //play chime?
         }
     }
@@ -210,6 +214,64 @@ class Play extends Phaser.Scene {
 
     }
 
+
+    doRainbow(color) {
+
+        console.log("change color of trail " + color);
+        this.airStreamEmitter1.stop();
+         this.airStreamEmitter2.stop();
+        this.airStreamEmitter1 =  this.airStreamParticles.createEmitter({
+            follow: this.player,
+            frame: ['trailParticle '+ color +'.png'],
+            followOffset: {
+                x: -25,
+                y: -43
+            },
+            alpha: { start: this.airStreamAlpha, end: 0 },
+            scale: { start: .1, end: 0 },
+            speedX: { min: -1500, max: -250 },
+            speedY: { min: -5, max: 5},
+            frequency: 5,
+            quantity: {min : 10, max: 10},
+            //angle: { min : 0, max : 360},
+            lifespan: 500
+        });
+        
+       
+        this.airStreamEmitter2 =  this.airStreamParticles.createEmitter({
+            follow: this.player,
+            frame: ['trailParticle '+ color +'.png'],
+            followOffset: {
+                x: -5,
+                y: 40
+            },
+            alpha: { start: this.airStreamAlpha, end: 0 },
+            scale: { start: .1, end: 0 },
+            speedX: { min: -1500, max: -250 },
+            speedY: { min: -5, max: 5},
+            frequency: 5,
+            quantity: {min : 10, max: 10},
+            //angle: { min : 0, max : 360},
+            lifespan: 500
+        });
+        this.airStreamEmitter1.start();
+        this.airStreamEmitter2.start();
+
+
+
+        if(color >= 6) {
+            color = 1;
+        } else {
+            color++;
+        }
+
+        this.time.addEvent({
+            delay: 100,
+            callback: ()=>{
+                this.doRainbow(color);    
+          }
+        });
+    }
     transitioning() {
         this.time.delayedCall(2000, () => {
             this.scene.transition({
