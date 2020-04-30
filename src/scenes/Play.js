@@ -29,7 +29,7 @@ class Play extends Phaser.Scene {
         this.player = this.physics.add.sprite(0, 355, 'player').setScale(0.4, 0.4).setOrigin(0.8,0.5);
         //this.player.setCollideWorldBounds(true);
 
-
+       
 
 
         let airStreamParticles = this.add.particles('trail');
