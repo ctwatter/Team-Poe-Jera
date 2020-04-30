@@ -16,14 +16,14 @@ class bubble extends Phaser.Physics.Arcade.Sprite {
     update() {
         //console.log("bubble movin");
         //if hit boundaries or player, reset
-        if(this.x < 0 - this.buffer) {
-            this.resetLoc();
-        } else if (this.y < 0 - this.buffer && this.side != 1) {
-            this.resetLoc();
-        } else if (this.y - this.buffer * 2 > game.config.height && this.side != 2) {
-            this.resetLoc();
-        }
         if(!this.waiting){
+            if(this.x < 0 - this.buffer) {
+                this.resetLoc();
+            } else if (this.y < 0 - this.buffer && this.side != 1) {
+                this.resetLoc();
+            } else if (this.y - this.buffer * 2 > game.config.height && this.side != 2) {
+                this.resetLoc();
+            } 
             this.x += this.moveX;
             this.y += this.moveY;
         }

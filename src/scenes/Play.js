@@ -122,7 +122,7 @@ class Play extends Phaser.Scene {
             // do ease function based on distance?
         })
         //background movement
-        this.back1.tilePositionX += this.backgroundSpeed ;
+        this.back1.tilePositionX += this.backgroundSpeed;
 
         this.score.setText("Score: " + Score);
 
@@ -141,13 +141,13 @@ class Play extends Phaser.Scene {
             }
         } else if(Score >= this.scoreMilestone[this.currMilestone])
         {
-            this.backgroundSpeed += 0.5;
+            this.backgroundSpeed += 0.75;
             console.log("ADD CLOUD2");
             this.currMilestone++;
             this.addBubble();
             this.airStreamEmitter1.alpha.start += 0.05;
             this.airStreamEmitter2.alpha.start += 0.05;
-            this.framerate += 2;
+            this.framerate += 2.66;
             this.player.anims.msPerFrame = 1000/this.framerate;
             //play chime?
         }
