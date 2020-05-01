@@ -108,6 +108,7 @@ class Play extends Phaser.Scene {
     update() {
         if(this.input.keyboard.checkDown(keySpace, 0.01)){
             Score += 100;
+            this.score.setText("Score: " + Score);
         }
         //var vx = this.player.body.velocity.x;
         //player movement
@@ -178,9 +179,10 @@ class Play extends Phaser.Scene {
                 } else {
                     //game over you made a booboo
 
-                    if(Score > HighScore)
+                    if (Score > HighScore)
                     {
                         HighScore = Score;
+                        localStorage.setItem('highScore', HighScore);
                     }
 
                     //do scene change

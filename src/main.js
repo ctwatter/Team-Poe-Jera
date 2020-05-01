@@ -27,5 +27,5 @@ let config = {
 let game = new Phaser.Game(config);
 
 let keySpace;
-let HighScore = 0;
+let HighScore = parseInt(localStorage.getItem('highScore')) || 0;
 let Score = 0;
