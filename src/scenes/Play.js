@@ -115,9 +115,15 @@ class Play extends Phaser.Scene {
 
     addBubble(type) {
 
+        if(type != 2){
         let bubble1 = new bubble(this, 1280, 1000, 'gb1', 0, type).setScale(0.5, 0.5);
         bubble1.resetLoc();
         this.bubbleGroup.add(bubble1);
+        }else{
+        let bubble1 = new bubble(this, 1280, 1000, 'gb1', 0, type).setScale(0.2, 0.2);
+        bubble1.resetLoc();
+        this.bubbleGroup.add(bubble1);
+        }
 
     }
 
