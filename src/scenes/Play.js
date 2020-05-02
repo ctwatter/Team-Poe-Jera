@@ -55,6 +55,10 @@ class Play extends Phaser.Scene {
             lifespan: 500
         });
 
+
+
+        // //airStreamEmitter.startFollow(this.player);
+
         this.airStreamEmitter1.start();
         this.airStreamEmitter2.start();
         this.airStreamAlpha = 0;
@@ -63,16 +67,15 @@ class Play extends Phaser.Scene {
             runChildUpdate: true
         });
 
-        this.addBubble(0);
-        this.addBubble(1);
-        this.addBubble(2);
+        this.addBubble();
+        this.addBubble();
 
-        this.physics.add.overlap(this.player, this.bubbleGroup, this.bubbleOverlap, null, this);
-
+        this.physics.add.overlap(this.player, this.bubbleGroup, this.bubbleOverlap, null, this)
 
         this.bgm = game.sound.add('bgm');
         this.bgm.loop = true;
         this.bgm.play();
+
 
 
         //adding score
@@ -88,6 +91,7 @@ class Play extends Phaser.Scene {
                 left: 15,
                 right: 15
             },
+
         }
 
         this.scoreMilestone = [500, 1000, 2000, 3000, 4000, 5000];
@@ -97,25 +101,34 @@ class Play extends Phaser.Scene {
         this.framerate = 8;
         this.score = this.add.text(10,0, 'Score: ' + Score, scoreConfig).setOrigin(0,0);
 
-        //other variables
+        //game over flag
         this.gameOver = false;
+
         this.doRainbow(1);
         this.scoreMult = 1;
         this.rainbowOn = false;
+
+
+        //add fg cloud
+        this.fgc = this.add.sprite(0, 0, 'fg', 'fgCloud1').setOrigin(0,0);
+
     }
 
-    addBubble(type) {
+    addBubble() {
 
-        let bubble1 = new bubble(this, 1280, 1000, '2xscore', 0, type).setScale(0.5, 0.5);
+        let bubble1 = new bubble(this, 1280, 1000, 'gb1').setScale(0.5, 0.5);
         bubble1.resetLoc();
         this.bubbleGroup.add(bubble1);
 
     }
 
+
+
+
+
     update() {
         if(this.input.keyboard.checkDown(keySpace, 0.01)){
             Score += 100;
-            this.score.setText("Score: " + Score);
         }
         //var vx = this.player.body.velocity.x;
         //player movement
@@ -137,7 +150,7 @@ class Play extends Phaser.Scene {
             {
                 console.log("ADD CLOUD1");
                 this.lastMilestone += 5000;
-                this.addBubble(0);
+                this.addBubble();
                 this.backgroundSpeed += 0.5;
                 this.airStreamAlpha += 0.05;
 
@@ -157,6 +170,13 @@ class Play extends Phaser.Scene {
             this.player.anims.msPerFrame = 1000/this.framerate;
 
             //play chime?
+        }
+
+        this.fgc.x += -25;
+        if(this.fgc.x < -2000)
+        {
+            this.fgc.setTexture('fg', 'fgCloud' + Phaser.Math.Between(1,3));
+            this.fgc.x = 2500;
         }
     }
 
@@ -182,16 +202,15 @@ class Play extends Phaser.Scene {
                     cloudExEmitter1.explode(150, bubble.x, bubble.y);
 
                     bubble.resetLoc();
-                    Score += 100 * this.scoreMult;
+                    Score += 100;
                     this.score.setText("Score: " + Score);
 
-                } else if (bubble.good == 1) {
+              } else if (bubble.good == 1) {
                     //game over you made a booboo
 
-                    if (Score > HighScore)
+                    if(Score > HighScore)
                     {
                         HighScore = Score;
-                        localStorage.setItem('highScore', HighScore);
                     }
 
                     //do scene change
@@ -323,7 +342,7 @@ class Play extends Phaser.Scene {
 
 
 
-        }     
+        }
         if(color >= 6) {
             color = 1;
         } else {
@@ -335,7 +354,7 @@ class Play extends Phaser.Scene {
                 this.doRainbow(color);
         }
         });
-        
+
     }
     transitioning() {
         this.time.delayedCall(2000, () => {
