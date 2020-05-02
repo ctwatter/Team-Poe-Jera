@@ -102,7 +102,7 @@ class Play extends Phaser.Scene {
 
         //game over flag
         this.gameOver = false;
-        this.doRainbow(1);
+        //this.doRainbow(1);
     }
 
     addBubble() {
