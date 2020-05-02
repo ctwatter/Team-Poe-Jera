@@ -46,10 +46,6 @@ class Play extends Phaser.Scene {
             //angle: { min : 0, max : 360},
             lifespan: 500
         });
-        
-
-
-        // //airStreamEmitter.startFollow(this.player);
 
         this.airStreamEmitter1.start();
         this.airStreamEmitter2.start();
@@ -59,15 +55,16 @@ class Play extends Phaser.Scene {
             runChildUpdate: true
         });
 
-        this.addBubble();
-        this.addBubble();
+        this.addBubble(0);
+        this.addBubble(1);
+        this.addBubble(2);
 
-        this.physics.add.overlap(this.player, this.bubbleGroup, this.bubbleOverlap, null, this)
+        this.physics.add.overlap(this.player, this.bubbleGroup, this.bubbleOverlap, null, this);
+
 
         this.bgm = game.sound.add('bgm');
         this.bgm.loop = true;
         this.bgm.play();
-
 
 
         //adding score
@@ -83,7 +80,6 @@ class Play extends Phaser.Scene {
                 left: 15,
                 right: 15
             },
-
         }
 
         this.scoreMilestone = [500, 1000, 2000, 3000, 4000, 5000];
@@ -93,13 +89,14 @@ class Play extends Phaser.Scene {
         this.framerate = 8;
         this.score = this.add.text(10,0, 'Score: ' + Score, scoreConfig).setOrigin(0,0);
 
-        //game over flag
+        //other variables
         this.gameOver = false;
+        this.scoreMult = 1;
     }
 
-    addBubble() {
+    addBubble(type) {
 
-        let bubble1 = new bubble(this, 1280, 1000, 'gb1').setScale(0.5, 0.5);
+        let bubble1 = new bubble(this, 1280, 1000, '2xscore', 0, type).setScale(0.5, 0.5);
         bubble1.resetLoc();
         this.bubbleGroup.add(bubble1);
 
@@ -108,6 +105,7 @@ class Play extends Phaser.Scene {
     update() {
         if(this.input.keyboard.checkDown(keySpace, 0.01)){
             Score += 100;
+            this.score.setText("Score: " + Score);
         }
         //var vx = this.player.body.velocity.x;
         //player movement
@@ -129,7 +127,7 @@ class Play extends Phaser.Scene {
             {
                 console.log("ADD CLOUD1");
                 this.lastMilestone += 5000;
-                this.addBubble();
+                this.addBubble(0);
                 this.backgroundSpeed += 0.5;
                 this.airStreamEmitter1.alpha.start += 0.05;
                 this.airStreamEmitter2.alpha.start += 0.05;
@@ -141,7 +139,7 @@ class Play extends Phaser.Scene {
             this.backgroundSpeed += 0.75;
             console.log("ADD CLOUD2");
             this.currMilestone++;
-            this.addBubble();
+            this.addBubble(0);
             this.airStreamEmitter1.alpha.start += 0.05;
             this.airStreamEmitter2.alpha.start += 0.05;
             this.framerate += 2.66;
@@ -172,15 +170,16 @@ class Play extends Phaser.Scene {
                     cloudExEmitter1.explode(150, bubble.x, bubble.y);
 
                     bubble.resetLoc();
-                    Score += 100;
+                    Score += 100 * this.scoreMult;
                     this.score.setText("Score: " + Score);
 
-                } else {
+                } else if (bubble.good == 1) {
                     //game over you made a booboo
 
-                    if(Score > HighScore)
+                    if (Score > HighScore)
                     {
                         HighScore = Score;
+                        localStorage.setItem('highScore', HighScore);
                     }
 
                     //do scene change
@@ -207,6 +206,17 @@ class Play extends Phaser.Scene {
                     });
                     this.cameras.main.on('camerafadeoutcomplete', () => {
                         this.transitioning();
+                    });
+                } else {
+                    //pickup
+                    this.scoreMult = 2;
+                    bubble.resetLoc();
+                    this.time.addEvent({
+                        delay: 10000,
+                        callback: () => {
+                            console.log('back to normal');
+                            this.scoreMult = 1;
+                        }
                     });
                 }
             }

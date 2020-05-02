@@ -10,10 +10,10 @@ class Menu extends Phaser.Scene {
         this.anims.create({ key: 'sleep', frames: this.anims.generateFrameNames('titleGuy'), frameRate: 12, repeat: -1 });
         this.titleGuy = this.add.sprite(0, 0, 'titleGuy').setScale(0.5).setOrigin(0,0).play('sleep');
 
-        this.logo = this.add.sprite(game.config.width/2 + 330,game.config.height/2 - 180, 
+        this.logo = this.add.sprite(game.config.width/2 + 300,game.config.height/2 - 180, 
             'logo').setScale(0.5,0.5).setOrigin(0.5);
 
-        this.start = this.add.sprite(game.config.width/2 + 330,game.config.height/2 + 50, 
+        this.start = this.add.sprite(game.config.width/2 + 300,game.config.height/2 + 50, 
                 'start').setScale(0.5,0.5).setOrigin(0.5).setInteractive();
   
         this.starting = false;
