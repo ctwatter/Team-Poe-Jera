@@ -53,6 +53,12 @@ class Loading extends Phaser.Scene {
         this.load.audio('noslurp', './assets/sfx_pickupend.wav')
         this.load.audio('starting', './assets/sfx_start.wav')
 
+        //load celery
+        this.load.image('celery', './assets/celery.png')
+        this.load.image('bad_logo', './assets/logo_celery.png')
+        this.load.audio('goodCelery', './assets/sfx_celery.wav')
+        this.load.audio('badCelery', './assets/sfx_c_e_l_e_r_y.wav')
+
         //done loading, move to menu
         this.time.delayedCall(2000, () => {
             this.cameras.main.fadeOut(2000,255, 255, 255);
