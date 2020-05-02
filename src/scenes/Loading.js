@@ -40,7 +40,7 @@ class Loading extends Phaser.Scene {
         //load atlases
         this.load.atlas('collectibles', './assets/collectibles.png','./assets/collectibles.json')
         this.load.atlas('uncollectibles', './assets/uncollectibes.png','./assets/uncollectibles.json')
-        this.load.atlas('rainbowTrail', './assets/trailParticle-SheetRainbowPastel.png', './assets/trailParticle.json');
+        this.load.atlas('rainbowTrail', './assets/trailParticle-SheetRainbowPastel.png', './assets/trailParticle.json')
         this.load.atlas('player', './assets/playerSprites.png', './assets/playerSprites.json')
         this.load.atlas('titleGuy', './assets/titleSprites.png', './assets/titleSprites.json')
         this.load.atlas('fg', './assets/fg.png', './assets/fg.json')
@@ -49,6 +49,8 @@ class Loading extends Phaser.Scene {
         this.load.audio('bgm', './assets/bgm.wav')
         this.load.audio('bonk', './assets/sfx_bonk.wav')
         this.load.audio('poof', './assets/sfx_good.wav')
+        this.load.audio('slurp', './assets/sfx_pickupstart.wav')
+        this.load.audio('noslurp', './assets/sfx_pickupend.wav')
         this.load.audio('starting', './assets/sfx_start.wav')
 
         //done loading, move to menu

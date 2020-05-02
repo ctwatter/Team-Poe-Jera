@@ -243,6 +243,7 @@ class Play extends Phaser.Scene {
                     //PICKUP - 2X SCORE FOR 10s
                     //-------------------------
 
+                    this.sound.play('slurp');
                     this.scoreMult = 2;
                     this.pickupIndicator.alpha = 1;
                     this.rainbowOn = true;
@@ -255,6 +256,7 @@ class Play extends Phaser.Scene {
                             this.rainbowOn = false;
                             this.airStreamEmitter1.stop();
                             this.airStreamEmitter2.stop();
+                            this.sound.play('noslurp');
                             this.airStreamEmitter1 =  this.airStreamParticles.createEmitter({
                                 follow: this.player,
                                 frame: ['trailParticle 0.png'],
