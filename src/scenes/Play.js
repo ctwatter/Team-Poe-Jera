@@ -5,6 +5,7 @@ class Play extends Phaser.Scene {
 
     create() {
         Score = 0;
+        maxSpeed = -10;
         this.cameras.main.fadeIn(2000,255, 255, 255);
         keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.back1 = this.add.tileSprite(0,0,2560,720, 'background').setOrigin(0,0);
@@ -148,7 +149,7 @@ class Play extends Phaser.Scene {
                 this.backgroundSpeed += 0.5;
                 this.foregroundSpeed -= 1.25;
                 this.airStreamAlpha += 0.05;
-
+                maxSpeed--;
                 //play chime?
             }
         } else if(Score >= this.scoreMilestone[this.currMilestone])
@@ -162,7 +163,7 @@ class Play extends Phaser.Scene {
             this.airStreamEmitter2.alpha.start += 0.05;
             this.framerate += 2.66;
             this.player.anims.msPerFrame = 1000/this.framerate;
-
+            maxSpeed--;
             //play chime?
         }
 
@@ -349,6 +350,8 @@ class Play extends Phaser.Scene {
         } else {
             color++;
         }
+        Score += 5;
+        this.score.setText("Score: " + Score);
         this.time.addEvent({
             delay: 100,
             callback: ()=>{
