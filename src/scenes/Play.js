@@ -15,7 +15,7 @@ class Play extends Phaser.Scene {
 
         this.anims.create({ key: 'idle', frames: this.anims.generateFrameNames('player'), frameRate: 8, repeat: -1 });
 
-        this.player = this.physics.add.sprite(0, 355, 'player').setScale(0.3).play('idle');
+        this.player = this.physics.add.sprite(0, 355, 'player').setScale(0.3).play('idle').setOrigin(.75, .4);
 
 
 
@@ -26,8 +26,8 @@ class Play extends Phaser.Scene {
             follow: this.player,
             frame: ['trailParticle 0.png'],
             followOffset: {
-                x: 47,
-                y: -43
+                x: -18,
+                y: -35
             },
             alpha: { start: 0, end: 0 },
             scale: { start: 0.1, end: 0 },
@@ -42,8 +42,8 @@ class Play extends Phaser.Scene {
             follow: this.player,
             frame: ['trailParticle 0.png'],
             followOffset: {
-                x: 75,
-                y: 40
+                x: 10,
+                y: 50
             },
             alpha: { start: 0, end: 0 },
             scale: { start: 0.1, end: 0 },
@@ -99,8 +99,9 @@ class Play extends Phaser.Scene {
 
         //other variables
         this.gameOver = false;
-        //this.doRainbow(1);
+        this.doRainbow(1);
         this.scoreMult = 1;
+        this.rainbowOn = false;
     }
 
     addBubble(type) {
@@ -220,14 +221,55 @@ class Play extends Phaser.Scene {
                     });
                 } else {
                     //pickup
+                    console.log("pickup");
                     this.scoreMult = 2;
+                    this.rainbowOn = true;
                     bubble.resetLoc();
                     this.time.addEvent({
                         delay: 10000,
                         callback: () => {
                             console.log('back to normal');
                             this.scoreMult = 1;
-                        }
+                            this.rainbowOn = false;
+                            this.airStreamEmitter1.stop();
+                            this.airStreamEmitter2.stop();
+                            this.airStreamEmitter1 =  this.airStreamParticles.createEmitter({
+                                follow: this.player,
+                                frame: ['trailParticle 0.png'],
+                                followOffset: {
+                                    x: -18,
+                                    y: -35
+                                },
+                                alpha: { start: this.airStreamAlpha, end: 0 },
+                                scale: { start: .1, end: 0 },
+                                speedX: { min: -1500, max: -250 },
+                                speedY: { min: -5, max: 5},
+                                frequency: 5,
+                                quantity: {min : 10, max: 10},
+                                //angle: { min : 0, max : 360},
+                                lifespan: 500
+                            });
+
+
+                            this.airStreamEmitter2 =  this.airStreamParticles.createEmitter({
+                                follow: this.player,
+                                frame: ['trailParticle 0.png'],
+                                followOffset: {
+                                    x: 10,
+                                    y: 50
+                                },
+                                alpha: { start: this.airStreamAlpha, end: 0 },
+                                scale: { start: .1, end: 0 },
+                                speedX: { min: -1500, max: -250 },
+                                speedY: { min: -5, max: 5},
+                                frequency: 5,
+                                quantity: {min : 10, max: 10},
+                                //angle: { min : 0, max : 360},
+                                lifespan: 500
+                            });
+                            this.airStreamEmitter1.start();
+                            this.airStreamEmitter2.start();
+                            }
                     });
                 }
             }
@@ -237,61 +279,63 @@ class Play extends Phaser.Scene {
 
 
     doRainbow(color) {
-
-        console.log("change color of trail " + color);
-        this.airStreamEmitter1.stop();
-         this.airStreamEmitter2.stop();
-        this.airStreamEmitter1 =  this.airStreamParticles.createEmitter({
-            follow: this.player,
-            frame: ['trailParticle '+ color +'.png'],
-            followOffset: {
-                x: -25,
-                y: -43
-            },
-            alpha: { start: this.airStreamAlpha, end: 0 },
-            scale: { start: .1, end: 0 },
-            speedX: { min: -1500, max: -250 },
-            speedY: { min: -5, max: 5},
-            frequency: 5,
-            quantity: {min : 10, max: 10},
-            //angle: { min : 0, max : 360},
-            lifespan: 500
-        });
-
-
-        this.airStreamEmitter2 =  this.airStreamParticles.createEmitter({
-            follow: this.player,
-            frame: ['trailParticle '+ color +'.png'],
-            followOffset: {
-                x: -5,
-                y: 40
-            },
-            alpha: { start: this.airStreamAlpha, end: 0 },
-            scale: { start: .1, end: 0 },
-            speedX: { min: -1500, max: -250 },
-            speedY: { min: -5, max: 5},
-            frequency: 5,
-            quantity: {min : 10, max: 10},
-            //angle: { min : 0, max : 360},
-            lifespan: 500
-        });
-        this.airStreamEmitter1.start();
-        this.airStreamEmitter2.start();
+        if(this.rainbowOn){
+            console.log("change color of trail " + color);
+            this.airStreamEmitter1.stop();
+            this.airStreamEmitter2.stop();
+            this.airStreamEmitter1 =  this.airStreamParticles.createEmitter({
+                follow: this.player,
+                frame: ['trailParticle '+ color +'.png'],
+                followOffset: {
+                    x: -18,
+                    y: -35
+                },
+                alpha: { start: this.airStreamAlpha, end: 0 },
+                scale: { start: .1, end: 0 },
+                speedX: { min: -1500, max: -250 },
+                speedY: { min: -5, max: 5},
+                frequency: 5,
+                quantity: {min : 10, max: 10},
+                //angle: { min : 0, max : 360},
+                lifespan: 500
+            });
 
 
+            this.airStreamEmitter2 =  this.airStreamParticles.createEmitter({
+                follow: this.player,
+                frame: ['trailParticle '+ color +'.png'],
+                followOffset: {
+                    x: 10,
+                    y: 50
+                },
+                alpha: { start: this.airStreamAlpha, end: 0 },
+                scale: { start: .1, end: 0 },
+                speedX: { min: -1500, max: -250 },
+                speedY: { min: -5, max: 5},
+                frequency: 5,
+                quantity: {min : 10, max: 10},
+                //angle: { min : 0, max : 360},
+                lifespan: 500
+            });
+            this.airStreamEmitter1.start();
+            this.airStreamEmitter2.start();
 
+
+
+
+        }     
         if(color >= 6) {
             color = 1;
         } else {
             color++;
         }
-
         this.time.addEvent({
             delay: 100,
             callback: ()=>{
                 this.doRainbow(color);
-          }
+        }
         });
+        
     }
     transitioning() {
         this.time.delayedCall(2000, () => {
