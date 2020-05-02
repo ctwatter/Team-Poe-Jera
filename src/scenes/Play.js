@@ -94,6 +94,7 @@ class Play extends Phaser.Scene {
         this.currMilestone = 0;
         this.lastMilestone = 10000;
         this.backgroundSpeed = 1;
+        this.foregroundSpeed = -15;
         this.framerate = 8;
         this.score = this.add.text(10,0, 'Score: ' + Score, scoreConfig).setOrigin(0,0);
         this.pickupIndicator = this.add.image(25, 48, '2xindicator').setScale(0.25,0.25).setOrigin(0,0);
@@ -102,10 +103,9 @@ class Play extends Phaser.Scene {
         //game over flag
         this.gameOver = false;
 
+        this.rainbowOn = false;
         this.doRainbow(1);
         this.scoreMult = 1;
-        this.rainbowOn = false;
-
 
         //add fg cloud
         this.fgc = this.add.sprite(0, 0, 'fg', 'fgCloud1').setOrigin(0,0);
@@ -146,13 +146,15 @@ class Play extends Phaser.Scene {
                 this.lastMilestone += 5000;
                 this.addBubble(0);
                 this.backgroundSpeed += 0.5;
+                this.foregroundSpeed -= 1.25;
                 this.airStreamAlpha += 0.05;
 
                 //play chime?
             }
         } else if(Score >= this.scoreMilestone[this.currMilestone])
         {
-            this.backgroundSpeed += 0.75;
+            this.backgroundSpeed += 1;
+            this.foregroundSpeed -= 2.5;
             this.currMilestone++;
             this.addBubble(0);
             this.airStreamAlpha += 0.05;
@@ -164,11 +166,11 @@ class Play extends Phaser.Scene {
             //play chime?
         }
 
-        this.fgc.x += -25;
-        if(this.fgc.x < -2000)
+        this.fgc.x += this.foregroundSpeed;
+        if(this.fgc.x < -3500)
         {
             this.fgc.setTexture('fg', 'fgCloud' + Phaser.Math.Between(1,3));
-            this.fgc.x = 2500;
+            this.fgc.x = 3500;
         }
     }
 
@@ -196,7 +198,7 @@ class Play extends Phaser.Scene {
                     cloudExEmitter1.explode(150, bubble.x, bubble.y);
 
                     bubble.resetLoc();
-                    Score += 100;
+                    Score += 100 * this.scoreMult;
                     this.score.setText("Score: " + Score);
 
               } else if (bubble.good == 1) {
@@ -206,6 +208,7 @@ class Play extends Phaser.Scene {
                     if(Score > HighScore)
                     {
                         HighScore = Score;
+                        localStorage.setItem('highScore',HighScore);
                     }
 
                     //do scene change
@@ -222,6 +225,8 @@ class Play extends Phaser.Scene {
                         lifespan: 500
                     });
                     cloudExEmitter1.explode(150, bubble.x, bubble.y);
+                    this.airStreamEmitter1.stop();
+                    this.airStreamEmitter2.stop();
                     bubble.resetLoc();
                     this.gameOver = true;
                     this.cameras.main.fadeOut(2000,255, 255, 255);
