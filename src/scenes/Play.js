@@ -2,23 +2,18 @@ class Play extends Phaser.Scene {
     constructor(){
         super("playScene")
     }
-    preload() {
-        this.load.atlas('rainbowTrail', './assets/trailParticle-SheetRainbowPastel.png', './assets/trailParticle.json');
-    }
+
     create() {
         Score = 0;
         this.cameras.main.fadeIn(2000,255, 255, 255);
         keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.back1 = this.add.tileSprite(0,0,2560,720, 'background').setOrigin(0,0);
-        //this.player = this.physics.add.sprite(0, 355, 'player').setScale(0.4, 0.4).setOrigin(0.8,0.5);
-        //this.player.setCollideWorldBounds(true);
+
 
         this.anims.create({ key: 'idle', frames: this.anims.generateFrameNames('player'), frameRate: 8, repeat: -1 });
 
+
         this.player = this.physics.add.sprite(0, 355, 'player').setScale(0.3).play('idle').setOrigin(.75, .4);
-
-
-
 
 
         this.airStreamParticles = this.add.particles('rainbowTrail');
@@ -26,8 +21,8 @@ class Play extends Phaser.Scene {
             follow: this.player,
             frame: ['trailParticle 0.png'],
             followOffset: {
-                x: -18,
-                y: -35
+                x: -17,
+                y: -34
             },
             alpha: { start: 0, end: 0 },
             scale: { start: 0.1, end: 0 },
@@ -67,8 +62,9 @@ class Play extends Phaser.Scene {
             runChildUpdate: true
         });
 
-        this.addBubble();
-        this.addBubble();
+        this.addBubble(0);
+        this.addBubble(0);
+        this.addBubble(2);
 
         this.physics.add.overlap(this.player, this.bubbleGroup, this.bubbleOverlap, null, this)
 
@@ -100,6 +96,8 @@ class Play extends Phaser.Scene {
         this.backgroundSpeed = 1;
         this.framerate = 8;
         this.score = this.add.text(10,0, 'Score: ' + Score, scoreConfig).setOrigin(0,0);
+        this.pickupIndicator = this.add.image(25, 48, '2xindicator').setScale(0.25,0.25).setOrigin(0,0);
+        this.pickupIndicator.alpha = 0;
 
         //game over flag
         this.gameOver = false;
@@ -114,23 +112,19 @@ class Play extends Phaser.Scene {
 
     }
 
-    addBubble() {
+    addBubble(type) {
 
-        let bubble1 = new bubble(this, 1280, 1000, 'gb1').setScale(0.5, 0.5);
+        let bubble1 = new bubble(this, 1280, 1000, 'gb1', 0, type).setScale(0.5, 0.5);
         bubble1.resetLoc();
         this.bubbleGroup.add(bubble1);
 
     }
 
-
-
-
-
     update() {
         if(this.input.keyboard.checkDown(keySpace, 0.01)){
             Score += 100;
         }
-        //var vx = this.player.body.velocity.x;
+
         //player movement
         this.tweens.add({
             targets: this.player,
@@ -142,15 +136,15 @@ class Play extends Phaser.Scene {
             yoyo: false
             // do ease function based on distance?
         })
+
         //background movement
         this.back1.tilePositionX += this.backgroundSpeed;
 
         if(this.currMilestone >= this.scoreMilestone.length){
             if(Score > this.lastMilestone)
             {
-                console.log("ADD CLOUD1");
                 this.lastMilestone += 5000;
-                this.addBubble();
+                this.addBubble(0);
                 this.backgroundSpeed += 0.5;
                 this.airStreamAlpha += 0.05;
 
@@ -159,11 +153,9 @@ class Play extends Phaser.Scene {
         } else if(Score >= this.scoreMilestone[this.currMilestone])
         {
             this.backgroundSpeed += 0.75;
-            console.log("ADD CLOUD2");
             this.currMilestone++;
-            this.addBubble();
-            this.airStreamAlpha += 0.05;
             this.addBubble(0);
+            this.airStreamAlpha += 0.05;
             this.airStreamEmitter1.alpha.start += 0.05;
             this.airStreamEmitter2.alpha.start += 0.05;
             this.framerate += 2.66;
@@ -184,8 +176,10 @@ class Play extends Phaser.Scene {
         if (!this.gameOver) {
             if(bubble.isActive) {
                 bubble.isActive = false;
+
                 if(bubble.good == 0){
-                    //play sound here
+                    //GOOD BUBBLE - ADD PTS
+                    //----------------------
                     this.sound.play('poof');
                     let cloudExParticles = this.add.particles('trail');
                     let cloudExEmitter1 = cloudExParticles.createEmitter({
@@ -206,7 +200,8 @@ class Play extends Phaser.Scene {
                     this.score.setText("Score: " + Score);
 
               } else if (bubble.good == 1) {
-                    //game over you made a booboo
+                    //BAD BUBBLE - YOU LOSE
+                    //---------------------
 
                     if(Score > HighScore)
                     {
@@ -238,17 +233,20 @@ class Play extends Phaser.Scene {
                     this.cameras.main.on('camerafadeoutcomplete', () => {
                         this.transitioning();
                     });
+
                 } else {
-                    //pickup
-                    console.log("pickup");
+                    //PICKUP - 2X SCORE FOR 10s
+                    //-------------------------
+
                     this.scoreMult = 2;
+                    this.pickupIndicator.alpha = 1;
                     this.rainbowOn = true;
                     bubble.resetLoc();
                     this.time.addEvent({
                         delay: 10000,
                         callback: () => {
-                            console.log('back to normal');
                             this.scoreMult = 1;
+                            this.pickupIndicator.alpha = 0;
                             this.rainbowOn = false;
                             this.airStreamEmitter1.stop();
                             this.airStreamEmitter2.stop();
@@ -299,7 +297,6 @@ class Play extends Phaser.Scene {
 
     doRainbow(color) {
         if(this.rainbowOn){
-            console.log("change color of trail " + color);
             this.airStreamEmitter1.stop();
             this.airStreamEmitter2.stop();
             this.airStreamEmitter1 =  this.airStreamParticles.createEmitter({
@@ -339,9 +336,6 @@ class Play extends Phaser.Scene {
             this.airStreamEmitter1.start();
             this.airStreamEmitter2.start();
 
-
-
-
         }
         if(color >= 6) {
             color = 1;
@@ -365,4 +359,3 @@ class Play extends Phaser.Scene {
         });
     }
 }
-//test

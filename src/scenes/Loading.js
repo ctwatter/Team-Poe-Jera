@@ -30,20 +30,20 @@ class Loading extends Phaser.Scene {
         this.load.image('logo', './assets/logo.png')
         this.load.image('start', './assets/start.png')
         this.load.image('background', './assets/bg.png')
-        //this.load.image('player', './assets/playerTest.png')
-
         this.load.image('gb1', './assets/gb1.png')
         this.load.image('gb2', './assets/gb2.png')
         this.load.image('trail', './assets/trailParticle.png')
-        this.load.image('2xscore', './assets/legosi.png');
+        this.load.image('2xscore', './assets/legosi.png')
+        this.load.image('2xindicator', './assets/2xindicator.png')
         this.load.image('fgc3', './assets/fgCloud3.png')
 
         //load atlases
         this.load.atlas('collectibles', './assets/collectibles.png','./assets/collectibles.json')
         this.load.atlas('uncollectibles', './assets/uncollectibes.png','./assets/uncollectibles.json')
-        this.load.atlas('player', './assets/playerSprites.png', './assets/playerSprites.json');
-        this.load.atlas('titleGuy', './assets/titleSprites.png', './assets/titleSprites.json');
-        this.load.atlas('fg', './assets/fg.png', './assets/fg.json');
+        this.load.atlas('rainbowTrail', './assets/trailParticle-SheetRainbowPastel.png', './assets/trailParticle.json');
+        this.load.atlas('player', './assets/playerSprites.png', './assets/playerSprites.json')
+        this.load.atlas('titleGuy', './assets/titleSprites.png', './assets/titleSprites.json')
+        this.load.atlas('fg', './assets/fg.png', './assets/fg.json')
 
         //load audios
         this.load.audio('bgm', './assets/bgm.wav')

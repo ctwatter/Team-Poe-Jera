@@ -12,6 +12,10 @@ class bubble extends Phaser.Physics.Arcade.Sprite {
         this.waiting = false; //prevents switching of bubbles mid-flight
         this.isActive = true; //prevents multiple collisions from one collision
         this.speedX = 5;
+
+        if (this.good == 2) {
+            this.setTexture('2xscore');
+        }
     }
     
     update() {
@@ -36,15 +40,12 @@ class bubble extends Phaser.Physics.Arcade.Sprite {
         this.waiting = true;
         
         this.side = Phaser.Math.Between(-1,2);
-        this.side
-        //console.log("MOVING");
         if(this.side == 0 || this.side == -1){ //left
             this.x = game.config.width + this.buffer * 2;
             this.y = Phaser.Math.Between(this.buffer, game.config.height - this.buffer);
             this.moveX = -this.speedX;
             this.moveY = Phaser.Math.Between(-10,10);
         } else if(this.side == 1) { //top
-            //console.log(game.config.width/2 + " "  + game.config.width);
             this.x = Phaser.Math.Between(game.config.width/2, game.config.width)
             this.y = 0 - this.buffer * 2;
             this.moveX = -this.speedX;
@@ -57,6 +58,7 @@ class bubble extends Phaser.Physics.Arcade.Sprite {
         }
 
         if (this.good != 2) {
+            //regular
             this.scene.time.addEvent({
                 delay: Phaser.Math.Between(500,2500),
                 callback: ()=>{
@@ -64,6 +66,7 @@ class bubble extends Phaser.Physics.Arcade.Sprite {
                 }
             });
         } else {
+            //pickup
             this.scene.time.addEvent({
                 delay: Phaser.Math.Between(20000,25000),
                 callback: () => {
@@ -75,7 +78,6 @@ class bubble extends Phaser.Physics.Arcade.Sprite {
     }
 
     changeCloud() {
-        //console.log("CHANGING GOOD/BAD");
         this.good = Phaser.Math.Between(0,1);
         if(this.good == 0){
             this.setTexture('collectibles', 'gb' + Phaser.Math.Between(1,6));
