@@ -83,8 +83,8 @@ class Play extends Phaser.Scene {
         //score display
         let scoreConfig = {
             fontFamily: 'Times New Roman',
-            fontSize: '26px',
-            color: '#000000',
+            fontSize: '36px',
+            color: '#ffffff',
             align: 'left',
             padding: {
                 top: 15,
@@ -101,9 +101,9 @@ class Play extends Phaser.Scene {
         this.backgroundSpeed = 1;
         this.foregroundSpeed = -15;
         this.framerate = 8;
-        this.score = this.add.text(10,0, 'Score: ' + Score, scoreConfig).setOrigin(0,0);
-        this.pickupIndicator = this.add.image(25, 48, '2xindicator').setScale(0.25,0.25).setOrigin(0,0);
-        this.pickupIndicator.alpha = 0;
+        this.score = this.add.text(game.config.width/2,30, 'Score: ' + Score, scoreConfig).setOrigin(0.5);
+        this.pickupIndicator = this.add.image(game.config.width/2 - 150, 15, '2xindicator').setScale(0.25,0.25).setOrigin(0,0);
+        //this.pickupIndicator.alpha = 0;
 
         //game over flag
         this.gameOver = false;
