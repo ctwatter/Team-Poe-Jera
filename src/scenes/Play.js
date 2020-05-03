@@ -234,7 +234,8 @@ class Play extends Phaser.Scene {
                     if(Score > HighScore)
                     {
                         HighScore = Score;
-                        localStorage.setItem('highScore',HighScore);
+                        localStorage.setItem('highScore',HighScore); //code to do local storage of highscore was based on code from 
+                                                                     //https://www.dynetisgames.com/2018/10/28/how-save-load-player-progress-localstorage/
                     }
 
                     //do scene change

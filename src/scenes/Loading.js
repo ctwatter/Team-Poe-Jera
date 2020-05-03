@@ -88,6 +88,9 @@ class Loading extends Phaser.Scene {
         
     }
 
+    //this is an instance of where we do 
+    //scene transitions (back to menu in this case)
+
     create(){
         this.add.image(game.config.width/2, 550 , 'rules').setScale(0.75, 0.75).setOrigin(0.5);
         this.time.delayedCall(3000, () => {

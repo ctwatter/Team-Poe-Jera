@@ -43,7 +43,7 @@ let config = {
 
 let game = new Phaser.Game(config);
 
-let HighScore = parseInt(localStorage.getItem('highScore')) || 0; //code to do local storage of highscore was gotten from 
+let HighScore = parseInt(localStorage.getItem('highScore')) || 0; //code to do local storage of highscore was based on code from 
                                                                   //https://www.dynetisgames.com/2018/10/28/how-save-load-player-progress-localstorage/
 let Score = 0;
 let maxSpeed = -10;
