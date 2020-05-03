@@ -1,6 +1,7 @@
 class Loading extends Phaser.Scene {
     constructor() {
-        super("loadingScene");
+        super("loadingScene"); 
+        
     }
 
     preload() {
@@ -25,7 +26,7 @@ class Loading extends Phaser.Scene {
             color: '#000000',
             align: 'center',
         }
-
+       
         this.loadingText = this.add.text(game.config.width/2, game.config.height/2 - 64, "Loading", loadConfig).setOrigin(0.5);
 
         loadConfig.fontSize = '20px';
@@ -39,8 +40,11 @@ class Loading extends Phaser.Scene {
                              "一寸先は闇\nNo one knows what lies ahead",];
         this.randomTing = this.rnd.pick(this.randomThings);
         this.randomText = this.add.text(game.config.width/2, game.config.height/2 + 32, this.randomTing, loadConfig).setOrigin(0.5);
-
+       
+        
+        
         //load images
+        this.load.image('rules', './assets/rules.png');
         this.load.image('logo', './assets/logo.png')
         this.load.image('start', './assets/start.png')
         this.load.image('background', './assets/bg.png')
@@ -51,6 +55,7 @@ class Loading extends Phaser.Scene {
         this.load.image('2xindicator', './assets/2xindicator.png')
         this.load.image('fgc3', './assets/fgCloud3.png')
         this.load.image('cloudExplode', './assets/cloudParticle.png');
+        
 
         //load atlases
         this.load.atlas('collectibles', './assets/collectibles.png','./assets/collectibles.json')
@@ -78,13 +83,18 @@ class Loading extends Phaser.Scene {
         this.load.audio('nopickupCelery', './assets/sfx_y_r_e_l_e_c.wav')
 
         //done loading, move to menu
-        this.time.delayedCall(2000, () => {
+        
+    }
+
+    create(){
+        this.add.image(250, 450 , 'rules').setOrigin(0,0);
+        this.time.delayedCall(3000, () => {
             this.cameras.main.fadeOut(2000,255, 255, 255);
             this.cameras.main.on('camerafadeoutcomplete', () => {
                 this.time.delayedCall(500, () => {
                     this.scene.transition({
                         target: 'menuScene',
-                        duration: 10,
+                        duration: 20,
                     });
                 });
             });
