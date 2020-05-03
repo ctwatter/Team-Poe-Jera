@@ -94,6 +94,10 @@ class Play extends Phaser.Scene {
 
         }
 
+        if (celeryMode) {
+            scoreConfig.fontFamily = 'Comic Sans MS';
+        }
+
         this.scoreMilestone = [1000, 2000, 4000, 6000, 8000, 10000];
         this.currMilestone = 0;
         this.lastMilestone = 15000;

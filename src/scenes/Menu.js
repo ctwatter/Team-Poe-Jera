@@ -43,6 +43,10 @@ class Menu extends Phaser.Scene {
             
         }
 
+        if (celeryMode) {
+            scoreConfig.fontFamily = 'Comic Sans MS';
+        }
+
         this.highscore = this.add.text(game.config.width - 20,game.config.height,"Highscore: " + HighScore, scoreConfig).setOrigin(1,1);
 
         this.clickStart = false;
