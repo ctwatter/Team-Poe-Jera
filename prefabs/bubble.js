@@ -12,10 +12,6 @@ class bubble extends Phaser.Physics.Arcade.Sprite {
         this.waiting = false; //prevents switching of bubbles mid-flight
         this.isActive = true; //prevents multiple collisions from one collision
         this.speedX = 5;
-
-        if (this.good == 2) {
-            this.setTexture('2xscore');
-        }
     }
     
     update() {
@@ -44,7 +40,7 @@ class bubble extends Phaser.Physics.Arcade.Sprite {
             this.x = game.config.width + this.buffer * 2;
             this.y = Phaser.Math.Between(this.buffer, game.config.height - this.buffer);
             this.moveX = Phaser.Math.Between(maxSpeed,-10);
-            if(this.y < game.config.height/4) {
+            if(this.y < game.config.height/4*3) {
                 this.moveY = Phaser.Math.Between(0,5);
             } else if(this.y > game.config.height/4*3) {
                 this.moveY = Phaser.Math.Between(-5,0);
@@ -52,15 +48,15 @@ class bubble extends Phaser.Physics.Arcade.Sprite {
                 this.moveY = Phaser.Math.Between(-5,5);
             }
         } else if(this.side == 1) { //top
-            this.x = Phaser.Math.Between(game.config.width/2, game.config.width)
+            this.x = Phaser.Math.Between(game.config.width/4*3, game.config.width)
             this.y = 0 - this.buffer * 2;
             this.moveX = Phaser.Math.Between(maxSpeed,-10);
-            this.moveY = Phaser.Math.Between(0,10);
+            this.moveY = Phaser.Math.Between(2,10);
         } else if(this.side == 2) { //bottom
             this.x = Phaser.Math.Between(game.config.width/4*3, game.config.width)
             this.y = game.config.height + this.buffer * 2;
             this.moveX = Phaser.Math.Between(maxSpeed,-10);
-            this.moveY = Phaser.Math.Between(-10,0);
+            this.moveY = Phaser.Math.Between(-10,-2);
         }
 
         if (this.good != 2) {
