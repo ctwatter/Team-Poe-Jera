@@ -52,7 +52,11 @@ class Menu extends Phaser.Scene {
     update() {
         if (this.starting) {
             if (!this.clickStart) {
-                this.sound.play('starting');
+                if (!celeryMode) {
+                    this.sound.play('starting');
+                } else {
+                    this.sound.play('storting');
+                }
                 this.clickStart = true;
             }
             this.cameras.main.scrollY -= 4;

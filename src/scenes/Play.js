@@ -14,7 +14,11 @@ class Play extends Phaser.Scene {
         this.anims.create({ key: 'idle', frames: this.anims.generateFrameNames('player'), frameRate: 8, repeat: -1 });
 
 
-        this.player = this.physics.add.sprite(0, 355, 'player').setScale(0.3).play('idle').setOrigin(.75, .4);
+        if (!celeryMode) {
+            this.player = this.physics.add.sprite(0, 355, 'player').setScale(0.3).play('idle').setOrigin(.75, .4);
+        } else {
+            this.player = this.physics.add.sprite(0, 355, 'celery').setScale(0.3).setOrigin(.75, .4); 
+        }
 
 
         this.airStreamParticles = this.add.particles('rainbowTrail');
@@ -189,7 +193,12 @@ class Play extends Phaser.Scene {
                 if(bubble.good == 0){
                     //GOOD BUBBLE - ADD PTS
                     //----------------------
-                    this.sound.play('poof');
+                    
+                    if (!celeryMode) {
+                        this.sound.play('poof');
+                    } else {
+                        this.sound.play('goodCelery');
+                    }
                     let cloudExParticles = this.add.particles('cloudExplode');
                     let cloudExEmitter1 = cloudExParticles.createEmitter({
                         alpha: { start: .3, end: 0 },
@@ -219,7 +228,11 @@ class Play extends Phaser.Scene {
                     }
 
                     //do scene change
-                    this.sound.play('bonk');
+                    if (!celeryMode) {
+                        this.sound.play('bonk');
+                    } else {
+                        this.sound.play('badCelery');
+                    }
                     let cloudExParticles = this.add.particles('cloudExplode');
                     let cloudExEmitter1 = cloudExParticles.createEmitter({
                         alpha: { start: .3, end: 0 },
@@ -250,7 +263,11 @@ class Play extends Phaser.Scene {
                     //PICKUP - 2X SCORE FOR 10s
                     //-------------------------
 
-                    this.sound.play('slurp');
+                    if (!celeryMode) {
+                        this.sound.play('slurp');
+                    } else {
+                        this.sound.play('pickupCelery');
+                    }
                     this.scoreMult = 2;
                     this.pickupIndicator.alpha = 1;
                     this.rainbowOn = true;
@@ -263,7 +280,11 @@ class Play extends Phaser.Scene {
                             this.rainbowOn = false;
                             this.airStreamEmitter1.stop();
                             this.airStreamEmitter2.stop();
-                            this.sound.play('noslurp');
+                            if (!celeryMode) {
+                                this.sound.play('noslurp');
+                            } else {
+                                this.sound.play('nopickupCelery');
+                            }
                             this.airStreamEmitter1 =  this.airStreamParticles.createEmitter({
                                 follow: this.player,
                                 frame: ['trailParticle 0.png'],
