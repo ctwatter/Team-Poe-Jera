@@ -1,4 +1,7 @@
 /*
+Salary Team, by Jameson Danning, Colin Watterson, Enrico Widodo
+completed 5/2/2020
+
 For our game, our group decided to put in a few interesting technical and visual aspects.
 
 For technical aspects, we made it so that the player moves towards the position of the mouse
