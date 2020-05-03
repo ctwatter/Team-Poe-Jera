@@ -103,7 +103,7 @@ class Play extends Phaser.Scene {
         this.framerate = 8;
         this.score = this.add.text(game.config.width/2,30, 'Score: ' + Score, scoreConfig).setOrigin(0.5);
         this.pickupIndicator = this.add.image(game.config.width/2 - 150, 15, '2xindicator').setScale(0.25,0.25).setOrigin(0,0);
-        //this.pickupIndicator.alpha = 0;
+        this.pickupIndicator.alpha = 0;
 
         //game over flag
         this.gameOver = false;
