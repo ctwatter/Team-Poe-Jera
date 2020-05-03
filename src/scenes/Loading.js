@@ -66,7 +66,6 @@ class Loading extends Phaser.Scene {
         this.load.atlas('rainbowTrail', './assets/trailParticle-SheetRainbowPastel.png', './assets/trailParticle.json')
         this.load.atlas('player', './assets/playerSprites.png', './assets/playerSprites.json')
         this.load.atlas('titleGuy', './assets/titleSprites.png', './assets/titleSprites.json')
-        this.load.atlas('taitorugai', './assets/tidalSprite.png', './assets/titleSprites.json')
         this.load.atlas('fg', './assets/fg.png', './assets/fg.json')
 
         //load audios
@@ -80,6 +79,7 @@ class Loading extends Phaser.Scene {
 
         //load celery
         this.load.image('celery', './assets/celery.png')
+        this.load.atlas('taitorugai', './assets/tidalSprite.jpg', './assets/titleSprites.json')
         this.load.image('bad_logo', './assets/logo_celery.png') 
         this.load.audio('goodCelery', './assets/sfx_celery.wav')
         this.load.audio('badCelery', './assets/sfx_c_e_l_e_r_y.wav')
