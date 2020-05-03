@@ -36,6 +36,7 @@ class Loading extends Phaser.Scene {
         this.load.image('2xscore', './assets/legosi.png')
         this.load.image('2xindicator', './assets/2xindicator.png')
         this.load.image('fgc3', './assets/fgCloud3.png')
+        this.load.image('cloudExplode', './assets/cloudParticle.png');
 
         //load atlases
         this.load.atlas('collectibles', './assets/collectibles.png','./assets/collectibles.json')
