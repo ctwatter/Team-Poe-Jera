@@ -44,7 +44,13 @@ class bubble extends Phaser.Physics.Arcade.Sprite {
             this.x = game.config.width + this.buffer * 2;
             this.y = Phaser.Math.Between(this.buffer, game.config.height - this.buffer);
             this.moveX = Phaser.Math.Between(maxSpeed,-10);
-            this.moveY = Phaser.Math.Between(-5,5);
+            if(this.y < game.config.height/4) {
+                this.moveY = Phaser.Math.Between(0,5);
+            } else if(this.y > game.config.height/4*3) {
+                this.moveY = Phaser.Math.Between(-5,0);
+            } else {
+                this.moveY = Phaser.Math.Between(-5,5);
+            }
         } else if(this.side == 1) { //top
             this.x = Phaser.Math.Between(game.config.width/2, game.config.width)
             this.y = 0 - this.buffer * 2;
