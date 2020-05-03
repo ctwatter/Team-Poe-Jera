@@ -88,7 +88,7 @@ class Loading extends Phaser.Scene {
     }
 
     create(){
-        this.add.image(250, 450 , 'rules').setOrigin(0,0);
+        this.add.image(game.config.width/2, 550 , 'rules').setScale(0.75, 0.75).setOrigin(0.5);
         this.time.delayedCall(3000, () => {
             this.cameras.main.fadeOut(2000,255, 255, 255);
             this.cameras.main.on('camerafadeoutcomplete', () => {
