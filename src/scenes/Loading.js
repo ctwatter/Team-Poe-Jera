@@ -62,6 +62,7 @@ class Loading extends Phaser.Scene {
         this.load.atlas('rainbowTrail', './assets/trailParticle-SheetRainbowPastel.png', './assets/trailParticle.json')
         this.load.atlas('player', './assets/playerSprites.png', './assets/playerSprites.json')
         this.load.atlas('titleGuy', './assets/titleSprites.png', './assets/titleSprites.json')
+        this.load.atlas('taitorugai', './assets/tidalSprite.png', './assets/titleSprites.json')
         this.load.atlas('fg', './assets/fg.png', './assets/fg.json')
 
         //load audios
