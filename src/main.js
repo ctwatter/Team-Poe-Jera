@@ -31,3 +31,5 @@ let HighScore = parseInt(localStorage.getItem('highScore')) || 0; //code to do l
                                                                   //https://www.dynetisgames.com/2018/10/28/how-save-load-player-progress-localstorage/
 let Score = 0;
 let maxSpeed = -10;
+
+let celeryMode = false;
