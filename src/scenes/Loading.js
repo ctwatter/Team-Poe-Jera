@@ -70,7 +70,7 @@ class Loading extends Phaser.Scene {
         this.load.atlas('fg', './assets/fg.png', './assets/fg.json')
 
         //load audios
-        this.load.audio('bgm', './assets/bgm.wav')
+        this.load.audio('bgm', './assets/bgm.mp3')
         this.load.audio('bonk', './assets/sfx_bonk.wav')
         this.load.audio('poof', './assets/sfx_good.wav')
         this.load.audio('slurp', './assets/sfx_pickupstart.wav')
