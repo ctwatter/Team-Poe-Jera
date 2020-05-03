@@ -256,6 +256,10 @@ class Play extends Phaser.Scene {
                     this.airStreamEmitter1.stop();
                     this.airStreamEmitter2.stop();
                     bubble.resetLoc();
+
+                    //this is an instance of where we do 
+                    //scene transitions (back to menu in this case)
+
                     this.gameOver = true;
                     this.cameras.main.fadeOut(2000,255, 255, 255);
                     this.tweens.add({
@@ -337,6 +341,7 @@ class Play extends Phaser.Scene {
 
     }
 
+    //this is the part of the code where we do the rainbow trails
 
     doRainbow(color) {
         if(this.rainbowOn){
@@ -398,6 +403,7 @@ class Play extends Phaser.Scene {
         });
 
     }
+
     transitioning() {
         this.time.delayedCall(2000, () => {
             this.scene.transition({
