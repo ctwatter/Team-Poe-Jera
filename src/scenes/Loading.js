@@ -71,7 +71,7 @@ class Loading extends Phaser.Scene {
         //load celery
         this.load.image('celery', './assets/celery.png')
         this.load.image('bad_logo', './assets/logo_celery.png')
-        this.load.image('storting', './assets/sfx_stort.wav')
+        this.load.audio('storting', './assets/sfx_stort.wav')
         this.load.audio('goodCelery', './assets/sfx_celery.wav')
         this.load.audio('badCelery', './assets/sfx_c_e_l_e_r_y.wav')
         this.load.audio('pickupCelery', './assets/sfx_yrelec.wav')
