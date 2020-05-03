@@ -71,16 +71,18 @@ class Loading extends Phaser.Scene {
         this.load.audio('poof', './assets/sfx_good.wav')
         this.load.audio('slurp', './assets/sfx_pickupstart.wav')
         this.load.audio('noslurp', './assets/sfx_pickupend.wav')
+        this.load.audio('milestone', './assets/sfx_milestone.wav')
         this.load.audio('starting', './assets/sfx_start.wav')
 
         //load celery
         this.load.image('celery', './assets/celery.png')
-        this.load.image('bad_logo', './assets/logo_celery.png')
-        this.load.audio('storting', './assets/sfx_stort.wav')
+        this.load.image('bad_logo', './assets/logo_celery.png') 
         this.load.audio('goodCelery', './assets/sfx_celery.wav')
         this.load.audio('badCelery', './assets/sfx_c_e_l_e_r_y.wav')
         this.load.audio('pickupCelery', './assets/sfx_yrelec.wav')
         this.load.audio('nopickupCelery', './assets/sfx_y_r_e_l_e_c.wav')
+        this.load.audio('mylestun', './assets/sfx_mylestun.wav')
+        this.load.audio('storting', './assets/sfx_stort.wav')
 
         //done loading, move to menu
         
