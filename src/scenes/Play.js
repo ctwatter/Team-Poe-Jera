@@ -91,9 +91,9 @@ class Play extends Phaser.Scene {
 
         }
 
-        this.scoreMilestone = [500, 1000, 2000, 3000, 4000, 5000];
+        this.scoreMilestone = [1000, 2000, 4000, 6000, 8000, 10000];
         this.currMilestone = 0;
-        this.lastMilestone = 10000;
+        this.lastMilestone = 15000;
         this.backgroundSpeed = 1;
         this.foregroundSpeed = -15;
         this.framerate = 8;
@@ -128,9 +128,9 @@ class Play extends Phaser.Scene {
     }
 
     update() {
-        if(this.input.keyboard.checkDown(keySpace, 0.01)){
-            Score += 100;
-        }
+        // if(this.input.keyboard.checkDown(keySpace, 0.01)){
+        //     Score += 100;
+        // }
 
         //player movement
         this.tweens.add({
@@ -190,12 +190,12 @@ class Play extends Phaser.Scene {
                     //GOOD BUBBLE - ADD PTS
                     //----------------------
                     this.sound.play('poof');
-                    let cloudExParticles = this.add.particles('trail');
+                    let cloudExParticles = this.add.particles('cloudExplode');
                     let cloudExEmitter1 = cloudExParticles.createEmitter({
-                        alpha: { start: 1, end: 0 },
-                        scale: { start: 0.1, end: 0 },
-                        speedX: { min: -500, max: 500 },
-                        speedY: { min: -500, max: 500 },
+                        alpha: { start: .3, end: 0 },
+                        scale: { start: .4, end: 0 },
+                        speedX: { min: -250, max: 250 },
+                        speedY: { min: -250, max: 250 },
                         frequency: 5,
                         quantity: {min : 10, max: 10},
                         //angle: { min : 0, max : 360},
@@ -220,12 +220,12 @@ class Play extends Phaser.Scene {
 
                     //do scene change
                     this.sound.play('bonk');
-                    let cloudExParticles = this.add.particles('trail');
+                    let cloudExParticles = this.add.particles('cloudExplode');
                     let cloudExEmitter1 = cloudExParticles.createEmitter({
-                        alpha: { start: 1, end: 0 },
-                        scale: { start: 0.1, end: 0 },
-                        speedX: { min: -500, max: 500 },
-                        speedY: { min: -500, max: 500 },
+                        alpha: { start: .3, end: 0 },
+                        scale: { start: .4, end: 0 },
+                        speedX: { min: -250, max: 250 },
+                        speedY: { min: -250, max: 250 },
                         frequency: 5,
                         quantity: {min : 10, max: 10},
                         //angle: { min : 0, max : 360},
@@ -356,8 +356,11 @@ class Play extends Phaser.Scene {
         } else {
             color++;
         }
-        Score += 5;
-        this.score.setText("Score: " + Score);
+        if(!this.gameOver){
+            Score += 5;
+            this.score.setText("Score: " + Score);   
+        }
+        
         this.time.addEvent({
             delay: 100,
             callback: ()=>{
