@@ -132,9 +132,9 @@ class Play extends Phaser.Scene {
     }
 
     update() {
-        // if(this.input.keyboard.checkDown(keySpace, 0.01)){
-        //     Score += 100;
-        // }
+        if(this.input.keyboard.checkDown(keySpace, 0.01)){
+            Score += 100;
+        }
 
         //player movement
         this.tweens.add({
@@ -160,7 +160,11 @@ class Play extends Phaser.Scene {
                 this.foregroundSpeed -= 1.25;
                 this.airStreamAlpha += 0.05;
                 maxSpeed--;
-                //play chime?
+                if (!celeryMode) {
+                    this.sound.play('milestone');
+                } else {
+                    this.sound.play('mylestun');
+                }
             }
         } else if(Score >= this.scoreMilestone[this.currMilestone])
         {
@@ -174,7 +178,11 @@ class Play extends Phaser.Scene {
             this.framerate += 2.66;
             this.player.anims.msPerFrame = 1000/this.framerate;
             maxSpeed--;
-            //play chime?
+            if (!celeryMode) {
+                this.sound.play('milestone');
+            } else {
+                this.sound.play('mylestun');
+            }
         }
 
         this.fgc.x += this.foregroundSpeed;
@@ -341,7 +349,7 @@ class Play extends Phaser.Scene {
                     x: -18,
                     y: -35
                 },
-                alpha: { start: this.airStreamAlpha, end: 0 },
+                alpha: { start: 1, end: 0 },
                 scale: { start: .1, end: 0 },
                 speedX: { min: -1500, max: -250 },
                 speedY: { min: -5, max: 5},
@@ -359,7 +367,7 @@ class Play extends Phaser.Scene {
                     x: 10,
                     y: 50
                 },
-                alpha: { start: this.airStreamAlpha, end: 0 },
+                alpha: { start: 1, end: 0 },
                 scale: { start: .1, end: 0 },
                 speedX: { min: -1500, max: -250 },
                 speedY: { min: -5, max: 5},
