@@ -349,7 +349,7 @@ class Play extends Phaser.Scene {
                     x: -18,
                     y: -35
                 },
-                alpha: { start: this.airStreamAlpha, end: 0 },
+                alpha: { start: 1, end: 0 },
                 scale: { start: .1, end: 0 },
                 speedX: { min: -1500, max: -250 },
                 speedY: { min: -5, max: 5},
@@ -367,7 +367,7 @@ class Play extends Phaser.Scene {
                     x: 10,
                     y: 50
                 },
-                alpha: { start: this.airStreamAlpha, end: 0 },
+                alpha: { start: 1, end: 0 },
                 scale: { start: .1, end: 0 },
                 speedX: { min: -1500, max: -250 },
                 speedY: { min: -5, max: 5},
