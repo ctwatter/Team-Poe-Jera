@@ -7,6 +7,10 @@ class Loading extends Phaser.Scene {
     preload() {
         this.cameras.main.setBackgroundColor('#FFFFFF');
 
+        //the code to do the garbage experimental mode was sourced from
+        //one of Nathan's examples in class @
+        //https://github.com/nathanaltice/KeyParty
+
         let celeryCombo = this.input.keyboard.createCombo('celery', { 
             resetOnWrongKey: true,
             maxKeyDelay: 0,
