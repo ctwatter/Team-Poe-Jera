@@ -5,6 +5,20 @@ class Loading extends Phaser.Scene {
 
     preload() {
         this.cameras.main.setBackgroundColor('#FFFFFF');
+
+        let celeryCombo = this.input.keyboard.createCombo('celery', { 
+            resetOnWrongKey: true,
+            maxKeyDelay: 0,
+            resetOnMatch: true,
+            deleteOnMatch: false,
+        });
+
+        this.input.keyboard.on('keycombomatch', (combo, event) => {
+            if (combo == celeryCombo) {
+                celeryMode = true; // :^)
+            }
+        });
+
         let loadConfig = {
             fontFamily: 'Times New Roman',
             fontSize: '48px',
@@ -59,6 +73,8 @@ class Loading extends Phaser.Scene {
         this.load.image('bad_logo', './assets/logo_celery.png')
         this.load.audio('goodCelery', './assets/sfx_celery.wav')
         this.load.audio('badCelery', './assets/sfx_c_e_l_e_r_y.wav')
+        this.load.audio('pickupCelery', './assets/sfx_yrelec.wav')
+        this.load.audio('nopickupCelery', './assets/sfx_y_r_e_l_e_c.wav')
 
         //done loading, move to menu
         this.time.delayedCall(2000, () => {
