@@ -27,7 +27,7 @@ class bubble extends Phaser.Physics.Arcade.Sprite {
         } else if (this.y < 0 - this.buffer && this.side != 1) {
             this.resetLoc();
         } else if (this.y - this.buffer * 2 > game.config.height && this.side != 2) {
-                this.resetLoc();
+            this.resetLoc();
         } 
 
         if(!this.waiting){

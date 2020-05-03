@@ -7,7 +7,6 @@ class Play extends Phaser.Scene {
         Score = 0;
         maxSpeed = -10;
         this.cameras.main.fadeIn(2000,255, 255, 255);
-        keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.back1 = this.add.tileSprite(0,0,2560,720, 'background').setOrigin(0,0);
 
 
@@ -120,21 +119,18 @@ class Play extends Phaser.Scene {
     addBubble(type) {
 
         if(type != 2){
-        let bubble1 = new bubble(this, 1280, 1000, 'gb1', 0, type).setScale(0.5, 0.5);
-        bubble1.resetLoc();
-        this.bubbleGroup.add(bubble1);
-        }else{
-        let bubble1 = new bubble(this, 1280, 1000, 'gb1', 0, type).setScale(0.2, 0.2);
-        bubble1.resetLoc();
-        this.bubbleGroup.add(bubble1);
+            let bubble1 = new bubble(this, 1280, 1000, 'dummy', 0, type).setScale(0.5, 0.5);
+            bubble1.resetLoc();
+            this.bubbleGroup.add(bubble1);
+        } else {
+            let bubble1 = new bubble(this, 1280, 1000, 'dummy', 0, type).setScale(0.2, 0.2);
+            bubble1.resetLoc();
+            this.bubbleGroup.add(bubble1);
         }
 
     }
 
     update() {
-        if(this.input.keyboard.checkDown(keySpace, 0.01)){
-            Score += 100;
-        }
 
         //player movement
         this.tweens.add({
@@ -297,8 +293,8 @@ class Play extends Phaser.Scene {
                                 follow: this.player,
                                 frame: ['trailParticle 0.png'],
                                 followOffset: {
-                                    x: -18,
-                                    y: -35
+                                    x: -17,
+                                    y: -34
                                 },
                                 alpha: { start: this.airStreamAlpha, end: 0 },
                                 scale: { start: .1, end: 0 },
