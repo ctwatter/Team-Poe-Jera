@@ -230,7 +230,7 @@ class Play extends Phaser.Scene {
                     Score += 100 * this.scoreMult;
                     this.score.setText("Score: " + Score);
 
-              } else if (bubble.good == 1) {
+                } else if (bubble.good == 1) {
                     //BAD BUBBLE - YOU LOSE
                     //---------------------
 
@@ -397,7 +397,11 @@ class Play extends Phaser.Scene {
             color++;
         }
         if(!this.gameOver){
-            Score += 5;
+            if (this.scoreMult == 1) {
+                Score += 5;
+            } else {
+                Score += 10;
+            }
             this.score.setText("Score: " + Score);   
         }
         
