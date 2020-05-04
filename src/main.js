@@ -22,7 +22,11 @@ let config = {
     type: Phaser.CANVAS,
     width: 1280,
     height: 720,
+    scale: {
+        autoCenter: Phaser.Scale.CENTER_BOTH
+    },
     resolution: window.devicePixelRatio,
+    
     physics: {
         default: 'arcade',
         arcade: {
@@ -45,6 +49,7 @@ let config = {
 };
 
 let game = new Phaser.Game(config);
+
 
 let HighScore = parseInt(localStorage.getItem('highScore')) || 0; //code to do local storage of highscore was based on code from 
                                                                   //https://www.dynetisgames.com/2018/10/28/how-save-load-player-progress-localstorage/

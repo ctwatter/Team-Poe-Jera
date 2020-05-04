@@ -15,9 +15,12 @@ class Play extends Phaser.Scene {
 
         if (!celeryMode) {
             this.player = this.physics.add.sprite(0, 355, 'player').setScale(0.3).play('idle').setOrigin(.75, .4);
+            
         } else {
             this.player = this.physics.add.sprite(0, 355, 'celery').setScale(0.3).setOrigin(.75, .4); 
         }
+        this.player.setSize(650,150, true);
+        this.player.setOffset(125,100);
 
 
         this.airStreamParticles = this.add.particles('rainbowTrail');
